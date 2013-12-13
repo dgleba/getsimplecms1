@@ -281,3 +281,5 @@
 [13-Dec-2013 20:01:07 Europe/Berlin] PHP Notice:  Undefined variable: description in C:\p2\xampp\htdocs\getsimplecms1\admin\inc\theme_functions.php on line 120
 [13-Dec-2013 20:01:07 Europe/Berlin] PHP Notice:  Undefined variable: description in C:\p2\xampp\htdocs\getsimplecms1\admin\inc\theme_functions.php on line 120
 [13-Dec-2013 20:01:08 Europe/Berlin] PHP Notice:  Undefined variable: description in C:\p2\xampp\htdocs\getsimplecms1\admin\inc\theme_functions.php on line 120
+[13-Dec-2013 20:10:52 Europe/Berlin] PHP Notice:  Undefined variable: description in C:\p2\xampp\htdocs\getsimplecms1\admin\inc\theme_functions.php on line 122
+[13-Dec-2013 20:10:53 Europe/Berlin] PHP Notice:  Undefined variable: description in C:\p2\xampp\htdocs\getsimplecms1\admin\inc\theme_functions.php on line 122

@@ -6,6 +6,15 @@
 * @Action:    Twitter Bootstrap for GetSimple CMS
 *
 *****************************************************/
+
+	//kdg54 2013-12-13_Fri_14.01-PM
+	if (isset($var)) {
+    echo "This var is set so I will print.";
+   } else 
+	{ 
+	  $description = '.';
+	}
+
 ?>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
