@@ -15,6 +15,7 @@
 if(!defined('GSSTYLEWIDE')) define('GSSTYLEWIDE','wide'); // wide style sheet
 if(!defined('GSSTYLE_SBFIXED')) define('GSSTYLE_SBFIXED','sbfixed'); // fixed sidebar
 
+
 # Setup inclusions
 $load['plugin'] = true;
 if (file_exists('gsconfig.php')) {

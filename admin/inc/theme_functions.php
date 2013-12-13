@@ -95,12 +95,15 @@ function get_page_meta_keywords($echo=true) {
  */
 function get_page_meta_desc($echo=true) {
 	global $metad;
-
+	//kdg54 2013-12-13_Fri_14.01-PM
+   $description = '.';
+   
 	if ($metad != '') {
 		$description = encode_quotes(strip_decode($metad));
 	}
 	else if(getDef('GSAUTOMETAD',true))
 	{
+		
 		// get meta from content excerpt
 		if (function_exists('mb_substr')) { 
 			$description = trim(mb_substr(strip_tags(strip_decode($content)), 0, 160));

@@ -36,7 +36,6 @@
 1386622211|admin/inc/plugin_functions.php
 1386622211|admin/inc/security_functions.php
 1386622211|admin/inc/template_functions.php
-1386622211|admin/inc/theme_functions.php
 1386622211|admin/inc/thumb.php
 1386622211|admin/inc/timezone_options.txt
 1386622211|admin/inc/tmp/tmp-404.xml
@@ -546,7 +545,6 @@
 1386622405|data/other/authorization.xml
 1386622435|data/other/components.xml
 1386951088|data/other/logs/failedlogins.log
-1386623601|data/other/plugins.xml
 1386622435|data/pages/index.xml
 1386622213|data/thumbs/.htaccess
 1386622816|data/thumbs/media/thumbnail.not-styled-bootstrap-2013-12-02_162316.jpg
@@ -556,7 +554,6 @@
 1386951256|data/users/dg.txt.txt
 1386622514|data/users/dg.xml
 1386622213|gsconfig.php
-1386622213|index.php
 1386622213|plugins/.htaccess
 1386623366|plugins/Bootstrap3.php
 1386623366|plugins/Bootstrap3/lang/.htaccess
@@ -680,10 +677,13 @@
 1386952280|.mtimes
 1386953822|backups/users/dg.xml.bak
 1386953995|data/thumbs/thumbnail.styled,2013-12-02_162002.jpg
-1386955614|backups/other/website.xml.bak
-1386956432|backups/pages/add-a-user.bak.xml
-1386956499|data/other/logs/errorlog.txt
-1386956432|data/other/pages.xml
 1386955614|data/other/website.xml
-1386956432|data/pages/add-a-user.xml
-1386956432|sitemap.xml
+1386961346|admin/inc/theme_functions.php
+1386958584|backups/other/website.xml.bak
+1386958732|backups/pages/add-a-user.bak.xml
+1386961268|data/other/logs/errorlog.txt
+1386958732|data/other/pages.xml
+1386958200|data/other/plugins.xml
+1386958732|data/pages/add-a-user.xml
+1386961371|index.php
+1386958732|sitemap.xml
