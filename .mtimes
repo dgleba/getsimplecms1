@@ -541,18 +541,14 @@
 1386622213|admin/zip.php
 1386622213|backups/.htaccess
 1386622213|backups/other/.htaccess
-1386623694|backups/other/website.xml.bak
 1386951639|backups/pages/add-a-user.bak.xml
-1386622514|backups/users/dg.xml.bak
 1386622213|data/.htaccess
 1386622435|data/other/404.xml
 1386622405|data/other/authorization.xml
 1386622435|data/other/components.xml
-1386951726|data/other/logs/errorlog.txt
 1386951088|data/other/logs/failedlogins.log
 1386951639|data/other/pages.xml
 1386623601|data/other/plugins.xml
-1386623694|data/other/website.xml
 1386951639|data/pages/add-a-user.xml
 1386622435|data/pages/index.xml
 1386622213|data/thumbs/.htaccess
@@ -573,7 +569,6 @@
 1386622213|plugins/InnovationPlugin/lang/en_US.php
 1386622213|readme.txt
 1386622213|robots.txt
-1386951639|sitemap.xml
 1386623057|theme/Bootstrap3/contact.php
 1386623057|theme/Bootstrap3/css/Bootstrap3.css
 1386623057|theme/Bootstrap3/css/bootstrap_Amelia.min.css
@@ -686,3 +681,9 @@
 1352849350|theme/twitter-bootstrap/template.php
 1352842974|theme/twitter-bootstrap/wide.php
 1386952280|.mtimes
+1386953822|backups/other/website.xml.bak
+1386953822|backups/users/dg.xml.bak
+1386953908|data/other/logs/errorlog.txt
+1386953822|data/other/website.xml
+1386953995|data/thumbs/thumbnail.styled,2013-12-02_162002.jpg
+1386953822|sitemap.xml
