@@ -4,3 +4,7 @@
 *.sublime-*
 
 thumbs.db
+
+/data/uploads/
+/data/cache/
+

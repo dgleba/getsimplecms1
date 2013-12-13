@@ -23,7 +23,7 @@ Options -Indexes
 
 	# Usually it RewriteBase is just '/', but 
 	# replace it with your subdirectory path
-	RewriteBase **REPLACE**
+	RewriteBase /getsimplecms1/
 
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item><pubDate>Fri, 13 Dec 2013 17:20:25 +0100</pubDate><title><![CDATA[Add a user]]></title><titlelong><![CDATA[]]></titlelong><summary><![CDATA[]]></summary><url><![CDATA[add-a-user]]></url><author><![CDATA[dg]]></author><template><![CDATA[template.php]]></template><parent><![CDATA[]]></parent><menu><![CDATA[add a user]]></menu><menuStatus><![CDATA[Y]]></menuStatus><menuOrder><![CDATA[0]]></menuOrder><private><![CDATA[]]></private><meta><![CDATA[]]></meta><metad><![CDATA[]]></metad><metarNoIndex><![CDATA[0]]></metarNoIndex><metarNoFollow><![CDATA[0]]></metarNoFollow><metarNoArchive><![CDATA[0]]></metarNoArchive><content><![CDATA[&lt;hr /&gt;
+&lt;p&gt;login in to the system&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;&quot; src=&quot;http://localhost/getsimplecms1/data/uploads/media/not-styled-bootstrap-2013-12-02_162316.jpg&quot; style=&quot;width: 651px; height: 209px;&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;h1&gt;&lt;strong&gt;item 2:&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;&lt;img alt=&quot;&quot; src=&quot;http://localhost/getsimplecms1/data/uploads/styled%2C2013-12-02_162002.jpg&quot; style=&quot;width: 497px; height: 364px;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;h1&gt;Videos&lt;/h1&gt;
+&lt;p&gt;
+&lt;span style=&quot;font-size:22px;&quot;&gt;&lt;strong&gt;Training (webm)&lt;/strong&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;video controls id=&quot;video1&quot; width=&quot;100%&quot;&gt;
+	&lt;source src=&quot;http://localhost/getsimplecms1/data/uploads/stackedpedestals.webm&quot; type=&quot;video/webm&quot;&gt; 
+	A video should be shown here in this spot. Unfortunately, it seems that your browser may not support this video format. 
+&lt;/video&gt;
+
+&lt;p&gt;
+&lt;span style=&quot;font-size:22px;&quot;&gt;&lt;strong&gt;Mp4 and Ogg video&lt;/strong&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;video controls id=&quot;video2&quot; width=&quot;100%&quot;&gt;
+	&lt;source src=http://localhost/getsimplecms1/data/uploads/mov_bbb.ogg&quot; type=&quot;video/ogg&quot;&gt; 
+	&lt;source src=&quot;http://localhost/getsimplecms1/data/uploads/mov_bbb.mp4&quot; type=&quot;video/mp4&quot;&gt; 
+	A video should be shown here. Unfortunately, it seems that your browser may not support this video format. 
+&lt;/video&gt;
+]]></content></item>
