@@ -678,7 +678,6 @@
 1386953822|backups/users/dg.xml.bak
 1386953995|data/thumbs/thumbnail.styled,2013-12-02_162002.jpg
 1386955614|data/other/website.xml
-1386961346|admin/inc/theme_functions.php
 1386958584|backups/other/website.xml.bak
 1386958732|backups/pages/add-a-user.bak.xml
 1386961268|data/other/logs/errorlog.txt
@@ -687,3 +686,4 @@
 1386958732|data/pages/add-a-user.xml
 1386961371|index.php
 1386958732|sitemap.xml
+1386961659|admin/inc/theme_functions.php
