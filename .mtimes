@@ -544,7 +544,6 @@
 1386622435|data/other/404.xml
 1386622405|data/other/authorization.xml
 1386622435|data/other/components.xml
-1386951088|data/other/logs/failedlogins.log
 1386622435|data/pages/index.xml
 1386622213|data/thumbs/.htaccess
 1386622816|data/thumbs/media/thumbnail.not-styled-bootstrap-2013-12-02_162316.jpg
@@ -552,7 +551,6 @@
 1386624201|data/thumbs/thumbsm.styled,2013-12-02_162002.jpg
 1386622213|data/uploads/.htaccess
 1386951256|data/users/dg.txt.txt
-1386622514|data/users/dg.xml
 1386622213|gsconfig.php
 1386622213|plugins/.htaccess
 1386623366|plugins/Bootstrap3.php
@@ -673,17 +671,20 @@
 1332469496|theme/twitter-bootstrap/js/script.js
 1352849350|theme/twitter-bootstrap/template.php
 1352842974|theme/twitter-bootstrap/wide.php
-1386952280|.mtimes
-1386953822|backups/users/dg.xml.bak
 1386953995|data/thumbs/thumbnail.styled,2013-12-02_162002.jpg
 1386955614|data/other/website.xml
-1386958584|backups/other/website.xml.bak
 1386958732|backups/pages/add-a-user.bak.xml
 1386958732|data/other/pages.xml
 1386958200|data/other/plugins.xml
 1386958732|data/pages/add-a-user.xml
 1386961371|index.php
-1386958732|sitemap.xml
 1386961659|admin/inc/theme_functions.php
 1386961853|data/other/logs/errorlog.txt
 1386961845|theme/twitter-bootstrap/header.inc.php
+1404408519|backups/other/website.xml.bak
+1404408519|backups/users/dg.xml.bak
+1404408470|data/other/logs/failedlogins.log
+1404408519|data/users/dg.xml
+1404408519|sitemap.xml
+1352849350|theme/twitter-bootstrap/template - Copy.php
+1352842974|theme/twitter-bootstrap/template-wide.php
