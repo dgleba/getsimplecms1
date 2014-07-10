@@ -209,8 +209,6 @@
 1386953995|data/thumbs/thumbnail.styled,2013-12-02_162002.jpg
 1386955614|data/other/website.xml
 1386958732|backups/pages/add-a-user.bak.xml
-1386958732|data/other/pages.xml
-1386958200|data/other/plugins.xml
 1386958732|data/pages/add-a-user.xml
 1386961845|theme/twitter-bootstrap/header.inc.php
 1404408519|backups/users/dg.xml.bak
@@ -219,8 +217,6 @@
 1352849350|theme/twitter-bootstrap/template - Copy.php
 1352842974|theme/twitter-bootstrap/template-wide.php
 1404417579|backups/other/website.xml.bak
-1404417433|data/other/logs/errorlog.txt
-1404416862|data/other/logs/failedlogins.log
 |data/users/dg.txt.txt
 1403966463|plugins/Blocky/_notes/template.php.mno
 1403965609|plugins/Blocky/css/blocky.eot
@@ -289,7 +285,6 @@
 1405010333|admin/inc/plugin_functions.php
 1405010333|admin/inc/security_functions.php
 1405010333|admin/inc/template_functions.php
-1405010335|admin/inc/theme_functions.php
 1405010333|admin/inc/thumb.php
 1405010333|admin/inc/timezone_options.txt
 1405010333|admin/inc/tmp/tmp-403.xml
@@ -300,7 +295,6 @@
 1405010333|admin/inc/tmp/tmp.deny.htaccess
 1405010333|admin/inc/xss.php
 1405010333|admin/index.php
-1405010335|admin/install.php
 1405010333|admin/lang/en_US.php
 1405010333|admin/load-ajax.php
 1405010333|admin/load.php
@@ -314,7 +308,6 @@
 1405010333|admin/profile.php
 1405010333|admin/resetpassword.php
 1405010333|admin/settings.php
-1405010335|admin/setup.php
 1405010333|admin/share.php
 1405010333|admin/sitemap.php
 1405010333|admin/support.php
@@ -901,7 +894,6 @@
 1405010335|admin/template/style.php
 1405010335|admin/theme-edit.php
 1405010335|admin/theme.php
-1405010335|admin/update.php
 1405010335|admin/upload-uploadify.php
 1405010335|admin/upload.php
 1405010335|admin/uploadify-check-exists.php
@@ -921,7 +913,6 @@
 1405010335|data/uploads/index.php
 1405010335|data/users/.gskeep
 1405010335|gsconfig.php
-1405010335|index.php
 1405010335|plugins/.htaccess
 1405010335|plugins/GSJQueryMigrate.php
 1405010335|plugins/GSJQueryMigrate/assets/.htaccess
@@ -943,3 +934,14 @@
 1405010335|theme/Innovation/sidebar.inc.php
 1405010335|theme/Innovation/style.css
 1405010335|theme/Innovation/template.php
+1405003593|admin/inc/theme_functions.php
+|admin/install.php
+|admin/setup.php
+|admin/update.php
+1405011142|data/other/403.xml
+1405010945|data/other/logs/errorlog.txt
+1405011162|data/other/logs/failedlogins.log
+1405011170|data/other/logs/logins.log
+1405011186|data/other/pages.xml
+1405011142|data/other/plugins.xml
+1405003593|index.php
