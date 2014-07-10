@@ -1,4 +1,4 @@
-<?php
+<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
 /**
  * Thumbnail Class for Image Generator
  *
@@ -209,4 +209,4 @@ class Zubrag_image {
 
 }
 
-?>
+/* ?> */

@@ -81,7 +81,7 @@ define('GSDONOTPING', 1);
 #define("GSNOHIGHLIGHT",true);
 
 # Forces suppression of php errors when GSDEBUG is false, despite php ini settings
-# define('SUPPRESSERRORS',true);
+define('SUPPRESSERRORS',true);
 
 # Disable check for Apache web server, default false
 #define('GSNOAPACHECHECK', true);
@@ -100,7 +100,7 @@ define('GSDONOTPING', 1);
 # eg. 
 # define('GSSTYLE',GSSTYLE_SBFIXED);
 # define('GSSTYLE',GSSTYLEWIDE);
-#define('GSSTYLE',implode(',',array(GSSTYLEWIDE,GSSTYLE_SBFIXED)));
+# define('GSSTYLE',implode(',',array(GSSTYLEWIDE,GSSTYLE_SBFIXED)));
 
 # Disable Sitemap generation and menu items
 # define('GSNOSITEMAP',true);
@@ -112,4 +112,14 @@ define('GSDONOTPING', 1);
 # accepts a lang string, default is 'en_US', false to disable
 # define('GSMERGELANG',false);
 
-?>
+# Disable resetpassword , set false, default is true
+# define('GSALLOWRESETPASSWORD',false);
+
+# Disable logins , set false, default is true
+# define('GSALLOWLOGIN',false);
+
+define('GSWIDTH','1024px'); // css value px,%  0 or '' will be treated as 100%
+define('GSWIDTHWIDE','1336px');
+define('GSWIDEPAGES','components,theme-edit');
+
+/* ?> */

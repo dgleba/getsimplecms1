@@ -12,20 +12,20 @@
 # setup inclusions
 $load['plugin'] = true;
 include('inc/common.php');
+login_cookie_check();
 
 # variable settings
-$userid 	= login_cookie_check();
 $file 		= "components.xml";
 $path 		= GSDATAOTHERPATH;
-$bakpath 	= GSBACKUPSPATH .'other/';
+$bakpath 	= GSBACKUPSPATH .getRelPath(GSDATAOTHERPATH,GSDATAPATH); // backups/other/
 $update 	= ''; $table = ''; $list='';
 
 # check to see if form was submitted
 if (isset($_POST['submitted'])){
 	$value = $_POST['val'];
-	$slug = $_POST['slug'];
+	$slug  = $_POST['slug'];
 	$title = $_POST['title'];
-	$ids = $_POST['id'];
+	$ids   = $_POST['id'];
 
 	check_for_csrf("modify_components");
 
@@ -40,13 +40,13 @@ if (isset($_POST['submitted'])){
 		foreach ($ids as $id)		{
 			if ($title[$ct] != null) {
 				if ( $slug[$ct] == null )	{
-					$slug_tmp = to7bit($title[$ct], 'UTF-8');
+					$slug_tmp  = to7bit($title[$ct], 'UTF-8');
 					$slug[$ct] = clean_url($slug_tmp); 
-					$slug_tmp = '';
+					$slug_tmp  = '';
 				}
 				
-				$coArray[$ct]['id'] = $ids[$ct];
-				$coArray[$ct]['slug'] = $slug[$ct];
+				$coArray[$ct]['id']    = $ids[$ct];
+				$coArray[$ct]['slug']  = $slug[$ct];
 				$coArray[$ct]['title'] = safe_slash_html($title[$ct]);
 				$coArray[$ct]['value'] = safe_slash_html($value[$ct]);
 				
@@ -60,10 +60,10 @@ if (isset($_POST['submitted'])){
 		foreach ($ids as $comp)	{
 			# create the body of components.xml file
 			$components = $xml->addChild('item');
-			$c_note = $components->addChild('title');
+			$c_note     = $components->addChild('title');
 			$c_note->addCData($comp['title']);
 			$components->addChild('slug', $comp['slug']);
-			$c_note = $components->addChild('value');
+			$c_note     = $components->addChild('value');
 			$c_note->addCData($comp['value']);
 			$count++;
 		}
@@ -88,10 +88,10 @@ $componentsec = $data->item;
 $count= 0;
 if (count($componentsec) != 0) {
 	foreach ($componentsec as $component) {
-		$table .= '<div class="compdiv codewrap" id="section-'.$count.'"><table class="comptable" ><tr><td><b title="'.i18n_r('DOUBLE_CLICK_EDIT').'" class="editable">'. stripslashes($component->title) .'</b></td>';
+		$table .= '<div class="compdiv codewrap" id="section-'.$count.'"><table class="comptable" ><tr><td><b title="'.i18n_r('DOUBLE_CLICK_EDIT').'" class="comptitle editable">'. stripslashes($component->title) .'</b></td>';
 		$table .= '<td style="text-align:right;" ><code>&lt;?php get_component(<span class="compslugcode">\''.$component->slug.'\'</span>); ?&gt;</code></td><td class="delete" >';
-		$table .= '<a href="#" title="'.i18n_r('DELETE_COMPONENT').': '. cl($component->title).'?" class="delcomponent" rel="'.$count.'" >&times;</a></td></tr></table>';
-		$table .= '<textarea name="val[]" class="code_edit">'. stripslashes($component->value) .'</textarea>';
+		$table .= '<a href="javascript:void(0)" title="'.i18n_r('DELETE_COMPONENT').': '. cl($component->title).'?" class="delcomponent" rel="'.$count.'" >&times;</a></td></tr></table>';
+		$table .= '<textarea name="val[]" class="code_edit" data-mode="php">'. stripslashes($component->value) .'</textarea>';
 		$table .= '<input type="hidden" class="compslug" name="slug[]" value="'. $component->slug .'" />';
 		$table .= '<input type="hidden" class="comptitle" name="title[]" value="'. stripslashes($component->title) .'" />';
 		$table .= '<input type="hidden" name="id[]" value="'. $count .'" />';
@@ -123,9 +123,9 @@ include('template/include-nav.php'); ?>
 	<div class="main">
 	<h3 class="floated"><?php echo i18n('EDIT_COMPONENTS');?></h3>
 	<div class="edit-nav" >
-		<a href="#" id="addcomponent" accesskey="<?php echo find_accesskey(i18n_r('ADD_COMPONENT'));?>" ><?php i18n('ADD_COMPONENT');?></a>
+		<a href="javascript:void(0)" id="addcomponent" accesskey="<?php echo find_accesskey(i18n_r('ADD_COMPONENT'));?>" ><?php i18n('ADD_COMPONENT');?></a>
 		<?php echo $themeselector; ?>	
-		<p style="font-size:12px;color:#BBB;margin:0 3px;line-height:22px">Theme</p>	
+		<label>Theme</label>
 		<div class="clear"></div>
 	</div>
 	<form id="compEditForm" class="manyinputs" action="<?php myself(); ?>" method="post" accept-charset="utf-8" >

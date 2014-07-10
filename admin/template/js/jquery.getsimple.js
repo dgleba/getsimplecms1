@@ -1,6 +1,9 @@
-/*
+/**
  * GetSimple js file    
+ * 
  */
+
+/* jshint multistr: true */
 
 /* jQuery reverseOrder
  * Written by Corey H Maass for Arc90; (c) Arc90, Inc.
@@ -13,7 +16,7 @@
 (function($){$.fn.capslock=function(options){if(options)$.extend($.fn.capslock.defaults,options);this.each(function(){$(this).bind("caps_lock_on",$.fn.capslock.defaults.caps_lock_on);$(this).bind("caps_lock_off",$.fn.capslock.defaults.caps_lock_off);$(this).bind("caps_lock_undetermined",$.fn.capslock.defaults.caps_lock_undetermined);$(this).keypress(function(e){check_caps_lock(e)})});return this};function check_caps_lock(e){var ascii_code=e.which;var letter=String.fromCharCode(ascii_code);var upper=letter.toUpperCase();var lower=letter.toLowerCase();var shift_key=e.shiftKey;if(upper!==lower){if(letter===upper&&!shift_key){$(e.target).trigger("caps_lock_on")}else if(letter===lower&&!shift_key){$(e.target).trigger("caps_lock_off")}else if(letter===lower&&shift_key){$(e.target).trigger("caps_lock_on")}else if(letter===upper&&shift_key){if(navigator.platform.toLowerCase().indexOf("win")!==-1){$(e.target).trigger("caps_lock_off")}else{if(navigator.platform.toLowerCase().indexOf("mac")!==-1&&$.fn.capslock.defaults.mac_shift_hack){$(e.target).trigger("caps_lock_off")}else{$(e.target).trigger("caps_lock_undetermined")}}}else{$(e.target).trigger("caps_lock_undetermined")}}else{$(e.target).trigger("caps_lock_undetermined")}if($.fn.capslock.defaults.debug){if(console){console.log("Ascii code: "+ascii_code);console.log("Letter: "+letter);console.log("Upper Case: "+upper);console.log("Shift key: "+shift_key)}}}$.fn.capslock.defaults={caps_lock_on:function(){},caps_lock_off:function(){},caps_lock_undetermined:function(){},mac_shift_hack:true,debug:false}})(jQuery);
 
 
-/* jcrop display */ 
+/* jcrop display */
 function updateCoords(c) {
 	var x = Math.floor(c.x);
 	var y = Math.floor(c.y);
@@ -26,17 +29,21 @@ function updateCoords(c) {
 	$('#h').val(h);
 	$('#pich').html(h);
 	$('#picw').html(w);
-};
+}
 
-var Debugger = function () {}
+Debugger = function () {};
 Debugger.log = function (message) {
 	try {
 		console.log(message);
 	} catch (exception) {
 		return;
 	}
-}
- 
+};
+
+// log = function(msg){ Debugger.log(msg) };
+// Debugger.log('Debugger Init');
+
+(function ( $ ) {
 /*
  * popit
  * element attention blink
@@ -46,14 +53,14 @@ Debugger.log = function (message) {
 $.fn.popit = function ($speed) {
 	$speed = $speed || 500;
 	$(this).each(function () {
-		if ($(this).data('popped') != true) {
+		if ($(this).data('popped') !== true) {
 			$(this).fadeOut($speed).fadeIn($speed);
 			$(this).data('popped', true);
 		}
 	});
 	return $(this);
-}
- 
+};
+
 /*
  * closeit
  * fadeout close on delay
@@ -65,10 +72,96 @@ $.fn.removeit = function ($delay) {
 		$(this).delay($delay).fadeOut(500);
 	});
 	return $(this);
-}
- 
+};
 
-/* notification functions */ 
+// overrides a method thats supposed to be called on a single node (a method like val)
+$.fn.overrideNodeMethod = function(methodName, action) {
+    var originalVal = $.fn[methodName];
+    var thisNode = this;
+    $.fn[methodName] = function() {
+    	// if called on node, avoid recursion from callback
+        if (this[0]==thisNode[0] && arguments.callee.caller !== action) {
+            return action.apply(this, arguments);
+        } else {
+            return originalVal.apply(this, arguments);
+        }
+    };
+};
+ 
+/*
+ * spinner
+ *
+ * adds ajax or wait spinner, configured via opts object or presets
+ * inherits color from parent if not present
+ * presets.gs is base opts, all others are extended and override
+ * 
+ * @since 3.4
+ *
+ */
+
+$.fn.spin = function(opts, color, shim) {
+
+	return this.each(function() {
+		var $this = $(this),
+		data = $this.data();
+
+		if (data.spinner) {
+			data.spinner.stop();
+			delete data.spinner;
+		}
+
+		if(opts === undefined) opts = $.fn.spin.presets['gs'];
+
+		if (opts !== false) {
+			opts = $.extend(
+				{ color: color || $this.css('color') },
+				$.fn.spin.presets['gs'],
+				$.fn.spin.presets[opts] || opts
+			);
+			
+			if(opts.shim !== undefined && opts.shim === true){
+				var shimElem = $('<div style="position:relative;display:inline-block;height:100%;width:100%"></div>');
+				$this.append(shimElem);
+				data.spinner = new Spinner(opts).spin($(shimElem)[0]);
+			} else {
+				data.spinner = new Spinner(opts).spin(this); return;
+			}
+		}
+
+	});
+};
+
+$.fn.spin.presets = {
+	tiny:  {  width: 2, radius: 2 },
+	large: { width: 6, radius: 8 },
+	xlarge: { width: 10, radius: 13 },
+	gsdefault: { color : 'rgba(255, 255, 255, 0.8)' },
+	gstable: { shim: true },
+	gsfilemanager: { width:3, radius: 4,color : 'rgba(0, 0, 0, 0.6)',left: '13px' , top: '50%' },
+	gs: {
+		lines      : 9,          // The number of lines to draw
+		length     : 0,          // The length of each line
+		width      : 4,          // The line thickness
+		radius     : 5,          // The radius of the inner circle
+		corners    : 1,          // Corner roundness (0..1)
+		rotate     : 0,         // The rotation offset
+		direction  : 1,          // 1 clockwise, -1 counterclockwise
+		// color     : '#FFF',  // #rgb or #rrggbb or array of colors
+		speed      : 1.2,        // Rounds per second
+		trail      : 45,         // Afterglow percentage
+		opacity    : 0,          // Opacity of the lines
+		shadow     : false,      // Whether to render a shadow
+		hwaccel    : false,      // Whether to use hardware acceleration
+		className  : 'spinner',  // The CSS class to assign to the spinner
+		zIndex     : 2e9,        // The z-index (defaults to 2000000000)
+		top        : '50%',      // Top position relative to parent
+		left       : '50%'      // Left position relative to parent
+	}
+};
+
+}( jQuery));
+
+/* notification functions */
 function notifyOk($msg) {
 	return notify($msg, 'ok');
 }
@@ -92,23 +185,38 @@ function notify($msg, $type) {
 		return $notify;
 	}
 }
- 
+
 function clearNotify() {
 	$('div.wrapper .notify').remove();
 }
  
-basename = function(str){
-	return str.substring(0,str.lastIndexOf('/') ); 		
-} 
- 
-jQuery(document).ready(function () {
+function basename(str){
+	return str.substring(0,str.lastIndexOf('/') );
+}
 	
+/**
+ * generic i18n using array
+ * @todo add sprintf
+ */
+function i18n(key){
+	return GS.i18n[key] || key;
+}
+
+/**
+ * get elements tagname
+ */
+function getTagName(elem){
+	return $(elem).prop('tagName');
+}
+
+jQuery(document).ready(function () {
+
 	$("#tabs").tabs({
 		activate: function(event, ui) {
 			// set bookmarkable urls
 			var hash = ui.newTab.context.hash;
-			hash = hash.replace('#','');
-			window.location.hash = "tab_"+hash;
+			hash = "tab_"+hash.replace('#','');
+			window.location.replace(('' + window.location).split('#')[0] + '#' + hash);	// should not affect history
 		},
 		create: function (event,ui) {
 			// set active tab from hash
@@ -120,14 +228,21 @@ jQuery(document).ready(function () {
 		}
 	});
 
-	var loadingAjaxIndicator = $('#loader');
- 
+	var loadingAjaxIndicator;
+	if($('#loader')[0]) initLoaderIndicator();
+
+	function initLoaderIndicator(){
+		// replace loader IMG with ajax loader
+		$('#loader').remove();
+		loadingAjaxIndicator = $($('#nav_loaderimg').spin('gsdefault').data('spinner').el).attr('id','loader').hide();
+	}
+
 	function checkCoords() {
-		if (parseInt($('#x').val())) return true;
+		if (parseInt($('#x').val(),10)) return true;
 		alert('Please select a crop region then press submit.');
 		return false;
-	};
- 
+	}
+   
 	/* Listener for filter dropdown */
 	function attachFilterChangeEvent() {
 		$(document).on('change', "#imageFilter", function () {
@@ -195,7 +310,8 @@ jQuery(document).ready(function () {
 	// auto focus component editors
 	$('#components div.compdivlist a').on('click', function(ev){
 		focusCompEditor($(this).attr('href'));
-	});	
+		e.preventDefault();		
+	});
 	
 	$(".delconfirmcomp").on("click", function ($e) {
 		$e.preventDefault();
@@ -213,18 +329,29 @@ jQuery(document).ready(function () {
 		$e.preventDefault();
 		loadingAjaxIndicator.show();
 		var id = $("#id").val();
-		$("#divTxt").prepend('<div style="display:none;" class="compdiv codewrap" id="section-' + id + '"><table class="comptable"><tr><td><b>Title: </b><input type="text" class="text newtitle" name="title[]" value="" /></td><td class="delete"><a href="#" title="Delete Component:?" class="delcomponent" id="del-' + id + '" rel="' + id + '" >&times;</a></td></tr></table><textarea name="val[]" class="code_edit"></textarea><input type="hidden" name="slug[]" value="" /><input type="hidden" name="id[]" value="' + id + '" /><div>');
+		$("#divTxt").prepend('<div style="display:none;" class="compdiv codewrap" id="section-' + id + '"> \
+			<table class="comptable"><tr><td><label>Title: </label><input type="text" class="text newtitle" name="title[]" value="" /></td> \
+			<td class="delete"><a href="javascript:void(0)" title="Delete Component:?" class="delcomponent" id="del-' + id + '" rel="' + id + '" >&times;</a> \
+			</td></tr></table> \
+			<textarea name="val[]" class="code_edit" data-mode="php"></textarea><input type="hidden" name="slug[]" value="" /> \
+			<input type="hidden" name="id[]" value="' + id + '" /><div>');
 		$("#section-" + id).slideToggle('fast');
 		id = (id - 1) + 2;
 		$("#id").val(id); // bump count
 		loadingAjaxIndicator.fadeOut(500);
 		$('#submit_line').fadeIn(); // fadein in case no components exist
 		
-		// add codemirror to new textarea
-		var editor = jQuery().editorFromTextarea($("#divTxt").find('textarea').first().get(0));
+		// add codeditor to new textarea
+		var textarea = $("#divTxt").find('textarea').first();
+		Debugger.log($.isFunction($.fn.editorFromTextarea));
+		if($.isFunction($.fn.editorFromTextarea)) textarea.editorFromTextarea();
+
+		var editor = textarea.data('editor');
 		// retain autosizing but make sure the editor start larger than 1 line high
-		$(editor.getWrapperElement()).find('.CodeMirror-scroll').css('min-height',100);
-		editor.refresh();
+		if(editor){
+			$(editor.getWrapperElement()).find('.CodeMirror-scroll').css('min-height',100);
+			editor.refresh();
+		}	
 
 		$("#divTxt").find('input').get(0).focus();
 	});
@@ -250,7 +377,7 @@ jQuery(document).ready(function () {
 	$("b.editable").dblclick(function () {
 		var t = $(this).html();
 		$(this).parents('.compdiv').find("input.comptitle").hide();
-		$(this).after('<div id="changetitle"><b>Title: </b><input class="text newtitle titlesaver" name="title[]" value="' + t + '" /></div>');
+		$(this).after('<div id="changetitle"><label>Title: </b><input class="text newtitle titlesaver" name="title[]" value="' + t + '" /></div>');
 		$(this).next('#changetitle').children('input').focus();
 		$(this).parents('.compdiv').find("input.compslug").val('');
 		$(this).hide();
@@ -286,7 +413,7 @@ jQuery(document).ready(function () {
 		loadingAjaxIndicator.fadeOut(500);
 	});
 
-	$(".delconfirm").on("click", function () {
+	$("#maincontent").on("click",".delconfirm", function () {
 		var message = $(this).attr("title");
 		var dlink = $(this).attr("href");
 		var mytr = $(this).parents("tr");
@@ -301,6 +428,7 @@ jQuery(document).ready(function () {
 						type: "GET",
 						url: dlink,
 						success: function (response) {
+							response = $.parseHTML(response);
 							mytr.remove();
 							if ($("#pg_counter").length) {
 								counter = $("#pg_counter").html();
@@ -374,19 +502,18 @@ jQuery(document).ready(function () {
 	$("#maincontent").on("click", ".toggleEnable", function ($e) {
 		$e.preventDefault();
  
-		var loadingAjaxIndicator = $('#loader');
-		document.body.style.cursor = "wait";
+		// document.body.style.cursor = "wait";
 		loadingAjaxIndicator.show();
  
 		var message = $(this).attr("title");
 		var dlink = $(this).attr("href");
 		var mytd = $(this).parents("td");
 		var mytr = $(this).parents("tr");
- 
-		mytd.html('');
-		mytd.addClass('ajaxwait ajaxwait_dark ajaxwait_tint_dark');
+
+		mytd.html('').addClass('ajaxwait_tint_dark').spin('gstable');
+
 		$('.toggleEnable').addClass('disabled');
- 
+
 		$.ajax({
 			type: "GET",
 			dataType: "html",
@@ -403,30 +530,31 @@ jQuery(document).ready(function () {
 				$('#sidebar').html($("<div>").append(responseText.replace(rscript, "")).find('#sidebar > *'));
 				$('#maincontent').html($("<div>").append(responseText.replace(rscript, "")).find('#maincontent > *'));
  
-				document.body.style.cursor = "default";
+				// document.body.style.cursor = "default";
 				clearNotify();
-				notifyOk('Plugin Updated').popit().removeit();
+				notifyOk(i18n('PLUGIN_UPDATED')).popit().removeit();
+				initLoaderIndicator();
 			},
 			error: function (data, textStatus, jqXHR) {
 				// These go in failures if we catch them in the future
 				document.body.style.cursor = "default";
-				mytd.removeClass('ajaxwait ajaxwait_dark ajaxwait_tint_dark');
+				mytd.removeClass('ajaxwait_tint_dark');
 				$('.toggleEnable').removeClass('disabled');
 				loadingAjaxIndicator.fadeOut();
- 
+				mytd.stop(); 
 				clearNotify();
-				notifyError('An error has occured');
+				notifyError(i18n('ERROR'));
 			}
  
 		});
 	});
  
 	function getElemLabel(element){
-	   var label = $("label[for='"+element.attr('id')+"']")
-	   if (label.length == 0) {
-	     label = element.closest('label')
-	   }
-	   return label;
+		var label = $("label[for='"+element.attr('id')+"']");
+		if (label.length === 0) {
+			label = element.closest('label');
+		}
+		return label;
 	}
 
 	// edit.php
@@ -450,7 +578,7 @@ jQuery(document).ready(function () {
 		$('.charlimit').trigger('change');
 	}
 
-	if ($("#edit input#post-title:empty").val() == '') {
+	if ($("#edit input#post-title:empty").val() === '') {
 		$("#edit input#post-title").focus();
 	}
 
@@ -479,15 +607,15 @@ jQuery(document).ready(function () {
 	if ($("#post-menu-enable").is(":checked")) {} else {
 		$("#menu-items").css("display", "none");
 	}
- 
- 	// adds sidebar submit buttons and fire clicks
+
+	// adds sidebar submit buttons and fire clicks
 	var edit_line = $('#submit_line span').html();
 	$('#js_submit_line').html(edit_line);
 	$("#js_submit_line input.submit").on("click", function () {
 		$("#submit_line input.submit").trigger('click');
 	});
 
-	$("#save-close a").on("click", function ($e) {
+	$(".save-close a").on("click", function ($e) {
 		$e.preventDefault();
 		$('input[name=redirectto]').val('pages.php');
 		$("#submit_line input.submit").trigger('click');
@@ -496,7 +624,8 @@ jQuery(document).ready(function () {
  
 	// pages.php
 	$("#show-characters").on("click", function () {
-		$(".showstatus").toggle();
+		if($(this).hasClass('current')) $(".showstatus").hide();
+		else $(".showstatus").show() ;
 		$(this).toggleClass('current');
 	});
  
@@ -506,8 +635,9 @@ jQuery(document).ready(function () {
 		$('ol.more li').reverseOrder();
 	}
 	$("ol.more").each(function () {
-		$("li:gt(4)", this).hide(); /* :gt() is zero-indexed */
-		$("li:nth-child(5)", this).after("<li class='more'><a href='#'>More...</a></li>"); /* :nth-child() is one-indexed */
+		var show = 7; // how many to show
+		$("li:gt("+(show-1)+")", this).hide(); /* :gt() is zero-indexed */
+		if($("li:nth-child("+(show+1)+")", this)[0]) $("li:nth-child("+show+")", this).after("<li class='more'><a href='#'>More...</a></li>"); /* :nth-child() is one-indexed */
 	});
 	$("li.more a").on("click", function ($e) {
 		$e.preventDefault();
@@ -515,8 +645,8 @@ jQuery(document).ready(function () {
 		li.parent().children().show();
 		li.remove();
 	});
- 
- 	// theme.php
+
+	// theme.php
 	$("#theme_select").on('change',function (e) {
 		var theme_new = $(this).val();
 		var theme_url_old = $("#theme_preview").attr('src');
@@ -536,6 +666,8 @@ jQuery(document).ready(function () {
 	///////////////////////////////////////////////////////////////////////////
 	// theme-edit.php
 	///////////////////////////////////////////////////////////////////////////
+	
+	// change gs theme dropdown
 	$("#theme-folder").on('change',function (e) {
 		var thmfld = $(this).val();
 		if (checkChanged()) return; // todo: change selection back
@@ -543,7 +675,7 @@ jQuery(document).ready(function () {
 		updateTheme(thmfld);
 	});
 
-	// editor theme selector
+	// codemirror editor theme select
 	$('#cm_themeselect').on('change',function(e){
 		var theme = $(this).find(":selected").text();
 		sendDataToServer('theme-edit.php','themesave='+theme);
@@ -562,36 +694,38 @@ jQuery(document).ready(function () {
 		});
 	}	
 
+	// theme-edit fileselector change
 	// delegated on() handlers survive ajax replacement
 	$(document).on('click',"#theme_filemanager a.file",function(e){
-		// console.log('filechange');
+		// Debugger.log('filechange');
 		e.preventDefault();
 		var thmfld = $("#theme-folder").val();
-		// console.log($(this).attr('href'));
+		// Debugger.log($(this).attr('href'));
 		if (checkChanged()) return;
 		clearFileOpen();
-		$(this).addClass('ext-wait'); // loading icon
-		$(this).addClass('open'); // loading icon
+		$(this).addClass('open').addClass('ext-wait');
+		$(this).parent().spin('gsfilemanager'); // ajax spinner
 		updateTheme('','_noload',$(this).attr('href')+'&ajax=1'); // ajax request
 	});
 
 	function checkChanged(){
-		if($('#codetext').data('editor').hasChange == true){
+		if($('#codetext').data('editor').hasChange === true){
 			alert('This file has unsaved content, save or cancel before continuing');
 			return true;
 		}
 	}
 
+	// update theme-edit code editor
 	function updateTheme(theme,file,url){
 
-		// console.log(theme);
-		var theme = theme == undefined ? '' : theme;
-		var file  = file  == undefined ? '' : file;
-		var url   = url   == undefined ? "theme-edit.php?t="+theme+'&f='+file : url;
+		// Debugger.log(theme);
+		theme = theme === undefined ? '' : theme;
+		file  = file  === undefined ? '' : file;
+		url   = url   === undefined ? "theme-edit.php?t="+theme+'&f='+file : url;
 		
-		loadingAjaxIndicator.show('fast');
+		loadingAjaxIndicator.show();
 		$('#codetext').data('editor').setValue('');
-		$('#codetext').data('editor').hasChange == false;
+		$('#codetext').data('editor').hasChange = false;
 		$('#theme_edit_code').fadeTo('fast',0.3);
 
 		$.ajax({
@@ -634,15 +768,17 @@ jQuery(document).ready(function () {
 				
 				clearFileWaits();
 				loadingAjaxIndicator.fadeOut();
+
 				$('#theme_edit_code').fadeTo('fast',1);
 
 			}
 		});
 
 	}
- 	
- 	// removes loading icons
+	
+	// removes loading icons
 	function clearFileWaits(){
+		$('#theme_filemanager li .spinner').each(function(){$(this).closest('li').data('spinner').stop();}); 
 		$('#theme_filemanager a.ext-wait').removeClass('ext-wait'); 
 	}
 
@@ -661,6 +797,7 @@ jQuery(document).ready(function () {
 		e.preventDefault();
 		editor = $('#codetext').data('editor');
 		if(editor){
+			$('#theme_edit_code').fadeTo('fast',0.3).fadeTo('fast',1.0);
 			editor.setValue($(editor.getTextArea()).val());
 			editor.hasChange = false;
 		}	
@@ -669,9 +806,11 @@ jQuery(document).ready(function () {
 
 	// ajax save theme file
 	themeFileSave = function(cm){
-		loadingAjaxIndicator.show('fast');
+		loadingAjaxIndicator.show();
 
-		cm.save(); // copy cm back to textarea
+		if($(cm)[0] && $.isFunction(cm.save)){
+			cm.save(); // copy cm back to textarea if editor has save method
+		}	
 
 		var dataString = $("#themeEditForm").serialize();
 
@@ -681,12 +820,13 @@ jQuery(document).ready(function () {
 			url: 'theme-edit.php',
 			data: dataString+'&submitsave=1&ajaxsave=1',
 			success: function( response ) {
+				response = $.parseHTML(response); // jquery 1.9 html parsing fix
 				$('div.wrapper .updated').remove();
 				$('div.wrapper .error').remove();
 				if ($(response).find('div.error').html()) {
 					notifyError($(response).find('div.error').html()).popit().removeit();
 				}
-				else if ($(response).find('div.updated').html()) {
+				if ($(response).find('div.updated').html()) {
 					notifyOk($(response).find('div.updated').html()).popit().removeit();
 				}	
 				else {
@@ -697,28 +837,36 @@ jQuery(document).ready(function () {
 				$('#codetext').data('editor').hasChange = false; // mark clean		
 			}
 		});
-	}
+	};
 
+	// ajaxify components submit
+	$('#compEditForm').on('submit',function(e){
+		e.preventDefault();
+		componentSave(e);
+	});
+	
 
-	$('#compEditForm').submit(function(e) {
-		console.log("onsubmit");
+	componentSave = function(e){
+
+		Debugger.log("onsubmit");
 		e.preventDefault();
 
-		loadingAjaxIndicator.show('fast');
+		loadingAjaxIndicator.show();
 		// $('#codetext').data('editor').setValue('');
 		// $('#codetext').data('editor').hasChange == false;
 		// $('#theme_edit_code').fadeTo('fast',0.3);
 		
 		cm_save_editors();
-	    var url = "path/to/your/script.php"; // the script where you handle the form input.
+		var url = "path/to/your/script.php"; // the script where you handle the form input.
 		var dataString = $("#compEditForm").serialize();			
 
-	    $.ajax({
-	    	type: "POST",
+		$.ajax({
+			type: "POST",
 			cache: false,
 			url: 'components.php',
 			data: dataString+'&submitted=1&ajaxsave=1',
 			success: function( response ) {
+				response = $.parseHTML(response);
 				$('div.wrapper .updated').remove();
 				$('div.wrapper .error').remove();
 				if ($(response).find('div.error').html()) {
@@ -734,38 +882,6 @@ jQuery(document).ready(function () {
 				loadingAjaxIndicator.fadeOut();
 				// $('#codetext').data('editor').hasChange = false; // mark clean		
 			}
-	    });
-	});
-
-	componentSave = function(cm){
-		
-		loadingAjaxIndicator.show('fast');
-
-		cm.save(); // copy cm back to textarea
-
-		var dataString = $("#themeEditForm").serialize();
-
-		$.ajax({
-			type: "POST",
-			cache: false,
-			url: 'theme-edit.php',
-			data: dataString+'&submitsave=1&ajaxsave=1',
-			success: function( response ) {
-				$('div.wrapper .updated').remove();
-				$('div.wrapper .error').remove();
-				if ($(response).find('div.error').html()) {
-					notifyError($(response).find('div.error').html()).popit().removeit();
-				}
-				else if ($(response).find('div.updated').html()) {
-					notifyOk($(response).find('div.updated').html()).popit().removeit();
-				}	
-				else {
-					notifyError("<p>ERROR</p>").popit().removeit();					
-				}
-
-				loadingAjaxIndicator.fadeOut();
-				$('#codetext').data('editor').hasChange = false; // mark clean		
-			}
 		});
 	}
 
@@ -773,17 +889,6 @@ jQuery(document).ready(function () {
 		var extension = file.substr( (file.lastIndexOf('.') +1) );
 		return extension;
 	}
-
-	function getEditorMode(extension){
-		var modes = {
-			'php'  : 'application/x-httpd-php',
-			'html' : 'text/html',
-			'js'   : 'text/javascript',
-			'css'  : 'text/css'
-		};
-		return extension in modes ? modes[extension] : modes['php'];
-	}
-
 
 	// tree folding
 	$(document).on('click',"#theme_filemanager a.directory",function(e){
@@ -797,12 +902,11 @@ jQuery(document).ready(function () {
 		// Debugger.log('updating codemirror theme: ' + theme);
 		var parts = theme.split(' ');
 		callback = function () {
-			  cm_theme_update_editors(theme);
-			  editorConfig.theme = theme;
-			}
+				cm_theme_update_editors(theme);
+			};
 		if(theme == "default") cm_theme_update_editors(theme);
 		else loadjscssfile("template/js/codemirror/theme/"+parts[0]+".css", "css", callback );
-	}
+	};
 
 	// set all editors themes
 	cm_theme_update_editors = function(theme){
@@ -810,12 +914,15 @@ jQuery(document).ready(function () {
 		$('.code_edit').each(function(i, textarea){
 			var editor = $(textarea).data('editor');
 			// Debugger.log(editor);
-			if(editor) {
+			// update all editor themes, unless they were modified manually
+			if(editor && editor.getOption('theme') == editorTheme) {
 				editor.setOption('theme',theme);	
 				editor.refresh();
 			}	
-		});		
-	}
+		});	
+		editorConfig.theme = theme;		
+		editorTheme = theme; // update global
+	};
 
 	// save all editors
 	cm_save_editors = function(theme){
@@ -827,7 +934,7 @@ jQuery(document).ready(function () {
 				editor.save();
 			}	
 		});		
-	}
+	};
 
 	///////////////////////////////////////////////////////////////////////////
 	// title filtering on pages.php & backups.php
@@ -870,13 +977,13 @@ jQuery(document).ready(function () {
 	///////////////////////////////////////////////////////////////////////////
 
 	//create new folder in upload.php
-	$('#createfolder').on("click", function ($e) {
+	$("#maincontent").on("click",'#createfolder', function ($e) {
 		$e.preventDefault();
 		$("#new-folder").find("form").show();
 		$(this).hide();
 		$("#new-folder").find('#foldername').focus();
 	});
-	$("#new-folder .cancel").on("click", function ($e) {
+	$("#maincontent").on("click","#new-folder .cancel", function ($e) {
 		$e.preventDefault();
 		$("#new-folder").find("#foldername").val('');
 		$("#new-folder").find("form").hide();
@@ -899,7 +1006,7 @@ jQuery(document).ready(function () {
 					$("#new-folder").find("#foldername").val('');
 					$("#new-folder").find("form").hide();
 					$('#createfolder').show();
-					counter = parseInt($("#pg_counter").text());
+					counter = parseInt($("#pg_counter").text(),10);
 					$("#pg_counter").html(counter++);
 					$("tr." + newfolder + " td").css("background-color", "#F9F8B6");
 					loadingAjaxIndicator.fadeOut();
@@ -911,19 +1018,39 @@ jQuery(document).ready(function () {
  
 	function scrollsidebar(){
 		var elem = $('body.sbfixed #sidebar');
+
+		if(!jQuery().scrollToFixed || !elem[0]){
+			Debugger.log("sbfixed not enabled or scrolltofixed not loaded");
+			return;
+		}
+
 		elem.scrollToFixed({ 
 			marginTop: 15,
-			limit: function(){ return $('#footer').offset().top - elem.outerHeight(true) - 15},
-			postUnfixed: function(){$(this).addClass('fixed')},
-			postFixed: function(){$(this).removeClass('fixed')},
-			postAbsolute: function(){$(this).removeClass('fixed')},
+			limit: function(){ return $('#footer').offset().top - elem.outerHeight(true) - 15 ;} ,
+			postUnfixed: function(){$(this).addClass('fixed') ;},
+			postFixed: function(){$(this).removeClass('fixed') ;},
+			postAbsolute: function(){$(this).removeClass('fixed') ;},
 
 		});
 	}
 
+	// initialize fixed sidebar
 	scrollsidebar();
- 	
- 	// catch all redirects for session timeout on HTTP 401 unauthorized
+
+	// CTRL+s save hotkey listener
+	$(document).bind('keydown', function(e) {
+		// Debugger.log('keydown: ' + e.which);
+		var ctrlpress = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+		// detect CTRL+S do save on all pages
+		if(ctrlpress && (e.which == 83)) {
+			Debugger.log('Ctrl+S pressed');
+			dosave();
+			e.preventDefault();
+			return false;
+		}
+	});
+
+	// catch all redirects for session timeout on HTTP 401 unauthorized
 	$( document ).ajaxError(function( event, xhr, settings ) {
 		// notifyInfo("ajaxComplete: " + xhr.status);
 		if(xhr.status == 401){
@@ -932,10 +1059,19 @@ jQuery(document).ready(function () {
 		}
 	});
 	
-	// end of javascript for getsimple
+	// add tree folding to tree tables
+	// addTableTree(minrows,mindepth,headerdepth)
+	$('table.tree').addTableTree(1,1,1);
 
+	// end of jQuery ready
 });
- 
+
+function dosave(){
+	Debugger.log('saving');
+	// Debugger.log($("#submit_line input.submit"));
+	$("#submit_line input.submit").trigger('click'); // should do form.submit handlers as well
+}
+
 // lazy loader for js and css
 loadjscssfile = function(filename, filetype, callback){
 	if (filetype=="js"){ //if filename is a external JavaScript file
@@ -944,4 +1080,15 @@ loadjscssfile = function(filename, filetype, callback){
 	else if (filetype=="css"){ //if filename is an external CSS file
 		LazyLoad.css(filename,callback);
 	}
+};
+
+// prevent js access to cookies
+if(!document.__defineGetter__) {
+    Object.defineProperty(document, 'cookie', {
+        get: function(){return '' ;},
+        set: function(){return true ;},
+    });
+} else {
+    document.__defineGetter__("cookie", function() { return '';} );
+    document.__defineSetter__("cookie", function() {} );
 }

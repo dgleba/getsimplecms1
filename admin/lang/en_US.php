@@ -1,14 +1,15 @@
-<?php
+<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
+
 /**
- * English Language File
+ * English Language File for GetSimpleCMS
  *
- * Date:        6 December 2011
- * Revision:    Feb 2013
- * Version:     GetSimple 3.2.1
- * Traductors:  Chris Cagle 
- *
- * @package GetSimple
- * @subpackage Language
+ * @Date:       2013-2-1
+ * @Version:    GetSimple 3.4.0
+ * @Traductors: Chris Cagle 
+ * 
+ * @url:        http://get-simple.info
+ * @package     GetSimple
+ * @subpackage  Language
  */
 
 $i18n = array(
@@ -45,8 +46,8 @@ $i18n = array(
 "SELECT_LANGUAGE"         =>	"Select your language",
 "CONTINUE_SETUP"          =>	"Continue with Setup",
 "DOWNLOAD_LANG"           =>	"Download Languages",
-"SITE_UPDATED"			=>	"Your site has been Updated",
-"SERVICE_UNAVAILABLE"	=>	"This page is temporarily unavailable",
+"SITE_UPDATED"            =>	"Your site has been updated",
+"SERVICE_UNAVAILABLE"     =>	"This page is temporarily unavailable",
 
 /* 
 * For: pages.php
@@ -61,6 +62,8 @@ $i18n = array(
 "TOGGLE_STATUS"           =>	"Toggle Stat<em>u</em>s",
 "TOTAL_PAGES"             =>	"total pages",
 "ALL_PAGES"               =>	"Pages",
+"EXPAND_TOP"              =>	"Expand Top Parents",
+"COLLAPSE_TOP"            =>	"Collapse Top Parents",
 
 /* 
 * For: edit.php
@@ -104,13 +107,14 @@ $i18n = array(
 * For: upload.php
 */
 "ERROR_UPLOAD"            =>	"There was a problem with the file upload",
-"FILE_SUCCESS_MSG"        =>	"Success! File location",
+"FILE_SUCCESS_MSG"        =>	"File Upload Success!",
 "FILE_MANAGEMENT"         =>	"File Management",
 "UPLOADED_FILES"          =>	"Uploaded Files",
 "SHOW_ALL"                =>	"Show All",
 "VIEW_FILE"               =>	"View File",
 "DELETE_FILE"             =>	"Delete File",
 "TOTAL_FILES"             =>	"total files &amp; folders",
+"FILE_EXISTS_PROMPT"      =>    "File Exists, Overwrite?",
 
 /* 
 * For: logout.php
@@ -141,6 +145,7 @@ $i18n = array(
 "EDITING_FILE"            =>	"Editing File",
 "BTN_SAVECHANGES"         =>	"Save Changes",
 "EDIT"                    =>	"Edit",
+"THEME_ROOT"              =>    "Configuration Files",
 
 /* 
 * For: support.php
@@ -161,6 +166,7 @@ $i18n = array(
 "LOGS"                    =>	"Logs",
 "VIEWING"                 =>	"Viewing",
 "LOG_FILE"                =>	"Log File",
+"VIEW_LOG_FILE"           =>	"View Log Files",
 "CLEAR_ALL_DATA"          =>	"Clear all data from",
 "CLEAR_THIS_LOG"          =>	"<em>C</em>lear This Log",
 "LOG_FILE_ENTRY"          =>	"LOG FILE ENTRY",
@@ -221,30 +227,38 @@ $i18n = array(
 */
 "GENERAL_SETTINGS"        =>	"General Settings",
 "WEBSITE_SETTINGS"        =>	"Website Settings",
-"LOCAL_TIMEZONE"          =>	"Local Timezone",
 "LANGUAGE"                =>	"Language",
 "USE_FANCY_URLS"          =>	"Use Fancy URLs - <b style=\"font-weight:100\">Requires that your host has <code>mod_rewrite</code> enabled</b>",
-"ENABLE_HTML_ED"          =>	"<b>Enable the HTML editor</b>",
-"WARN_EMAILINVALID"       =>	"WARNING: This email address does not look valid!",
-"ONLY_NEW_PASSWORD"       =>	"Only provide a password below if you want to change your current one",
-"NEW_PASSWORD"            =>	"New Password",
-"CONFIRM_PASSWORD"        =>	"Confirm Password",
-"PASSWORD_NO_MATCH"       =>	"Passwords do not match",
 "PERMALINK"               =>	"Custom Permalink Structure",
 "MORE"                    =>	"more",
 "HELP"                    =>	"help",
 "FLUSHCACHE"              =>	"Flush All Caches",
 "FLUSHCACHE-SUCCESS"      =>	"Caches Flushed Successfully",
+
+/*
+ * For: Profie.php
+ */
+"USER_PROFILE"            =>    "User Profile",
 "DISPLAY_NAME"            =>	"A name for public display that is not your username",
+"ONLY_NEW_PASSWORD"       =>	"Only provide a password below if you want to change your current one",
+"ENABLE_HTML_ED"          =>	"<b>Enable the HTML editor</b>",
+"WARN_EMAILINVALID"       =>	"WARNING: This email address does not look valid!",
+"NEW_PASSWORD"            =>	"New Password",
+"CONFIRM_PASSWORD"        =>	"Confirm Password",
+"PASSWORD_NO_MATCH"       =>	"Passwords do not match",
+"LOCAL_TIMEZONE"          =>	"Local Timezone",
+"NEW_USER"                =>    "New User",
 
 /* 
 * For: health-check.php
 */
 "WEB_HEALTH_CHECK"        =>	"Website Health Check",
 "VERSION"                 =>	"Version",
-"UPG_NEEDED"              =>	"Upgrade Recommended",
-"CANNOT_CHECK"            =>	"Upgrade Check Failed !",
-"LATEST_VERSION"          =>	"Latest version installed",
+"CURR_VERSION"            =>	"Current Version: %s",
+"UPG_NEEDED"              =>	"A newer version is available",
+"CANNOT_CHECK"            =>	"Failed to check for upgrade",
+"LATEST_VERSION"          =>	"You have the latest version",
+"CHECK_MANUALLY"          =>	"Check Manually",
 "SERVER_SETUP"            =>	"Server Setup",
 "SERVER_IS"               =>	'Server reported as %s',
 "OR_GREATER_REQ"          =>	"or greater is required",
@@ -253,6 +267,7 @@ $i18n = array(
 "NOT_INSTALLED"           =>	"Not Installed",
 "WARNING"                 =>	"Warning",
 "DATA_FILE_CHECK"         =>	"Data File Integrity Check",
+"PAGE_FILE_CHECK"         =>	"Page File Integrity Check",
 "DIR_PERMISSIONS"         =>	"Directory Permissions",
 "EXISTANCE"               =>	"%s Existence",
 "MISSING_FILE"            =>	"Missing file",
@@ -312,14 +327,15 @@ $i18n = array(
 */
 "BROWSE_COMPUTER"         =>	"Browse Your Computer",
 "UPLOAD"                  =>	"Upload",
+"DROP_FILES"              =>	"Drop Files Here",
 
 /* 
 * For: sidebar-support.php
 */
-"SIDE_SUPPORT_LOG"        =>	"Supp<em>o</em>rt",
+"SIDE_SUPPORT_LOG"        =>	"Supp<em>o</em>rt Resources",
 "SIDE_HEALTH_CHK"         =>	"Website <em>H</em>ealth Check",
 "SIDE_DOCUMENTATION"      =>	"Wiki Documentation",
-"SIDE_VIEW_LOG"           =>	"<em>V</em>iew Log",
+"SIDE_VIEW_LOG"           =>	"<em>V</em>iew Logs",
 
 /* 
 * For: sidebar-theme.php
@@ -361,6 +377,7 @@ $i18n = array(
 "ER_CANNOT_INDEX"         =>	"You cannot change the URL of the index page",
 "ER_SETTINGS_UPD"         =>	"Your settings have been updated",
 "ER_OLD_RESTORED"         =>	"Your old settings have been restored",
+"ER_PROFILE_RESTORED"     =>	"The Profile has been restored",
 "ER_NEW_PWD_SENT"         =>	"A new password has been sent to the email address provided",
 "ER_SENDMAIL_ERR"         =>	"There was a problem sending the email. Please try again",
 "ER_FILE_DEL_SUC"         =>	"File deleted successfully",
@@ -396,8 +413,9 @@ $i18n = array(
 "LOGIN_FAILED"            =>	"Login failed. Please double check your Username and Password",
 
 /* 
-* For: Date Format
+* For: Locale and Date Format
 */
+"LOCALE"                  =>	"en_US",
 "DATE_FORMAT"             =>	"M j, Y", //please keep short
 "DATE_AND_TIME_FORMAT"    =>	"F jS, Y - g:i A", //date and time
 
@@ -438,7 +456,7 @@ $i18n = array(
 "PLUGIN_NAME"             =>	"Plugin",
 "PLUGIN_DESC"             =>	"Description",
 "PLUGIN_VER"              =>	"Version",
-
+"PLUGIN_UPDATED"          =>	"Plugin Updated",
 
 
 
@@ -456,6 +474,7 @@ $i18n = array(
 "KILL_CANT_CONTINUE"      =>	"Cannot continue. Please fix errors and try again.",
 "REFRESH"                 =>	"Refresh",
 "BETA"                    =>	"Beta / Bleeding Edge",
+"ALPHA"                   =>	"Alpha / Non-Stable !",
 
 /*
 * Misc Cleanup Work
@@ -548,15 +567,19 @@ $i18n = array(
 * Generics
 * @since 3.3
 */
+"COPY_SUCCESS"            =>    "Successfully Copied %s",
+"COPY_FAILURE"            =>    "Failed to Copy %s",
 "IS_MISSING"              =>	"%s is missing",
 "NOT_FOUND"               =>	"%s was not found",
 "TITLE"                   =>	"Title",
 "DELETE"                  =>	"Delete",
 "REMOVE"                  =>	"Remove",
+"REMOVED"                 =>	"Removed",
 "FILE"                    =>	"File",
 "FOLDER"                  =>	"Folder",
 "DIRECTORY"               =>	"Directory",
 "CLOSE"                   =>	"Close",
+"CLOSED"                  =>	"Closed",
 "OPEN"                    =>	"Open",
 "NEXT"                    =>	"Next",
 "PREVIOUS"                =>	"Previous",
@@ -581,7 +604,9 @@ $i18n = array(
 "MESSAGE"                 =>	"Message",
 "PRINT"                   =>	"Print",
 "VIEW"                    =>	"View",
+"VIEWED"                  =>	"Viewed",
 "REFRESH"                 =>	"Refresh",
+"REFRESHED"               =>	"Refreshed",
 "DOWNLOAD"                =>	"Download",
 "THEME"                   =>	"Theme",
 "COMPONENT"               =>	"Component",
@@ -596,21 +621,45 @@ $i18n = array(
 "GOOD"                    =>	"Good",
 "BAD"                     =>	"Bad",
 "PASS"                    =>	"Pass",
+"PASSED"                  =>	"Passed",
 "FAIL"                    =>	"Fail",
+"FAILED"                  =>	"Failed",
 "ITEMS"                   =>	"Items",
 "LIST"                    =>	"List",
 "ORDER"                   =>	"Order",
+"ORDERED"                 =>	"Ordered",
 "MENU"                    =>	"Menu",
 "LOG"                     =>	"Log",
+"LOGGED"                  =>	"Logged",
+"CONFIGURATION"           =>    "Configuration",
+"CONFIG"                  =>    "Config",
 "GEN_ENABLE"              =>	"Enable",
-"GEN_DISABLE"             =>	"Disable",
 "ENABLED"                 =>	"Enabled",
+"GEN_DISABLE"             =>	"Disable",
 "DISABLED"                =>	"Disabled",
 "ACTIVE"                  =>	"Active",
+"ACTIVATE"                =>	"Activate",
+"ACTIVATED"               =>	"Activated",
 "INACTIVE"                =>	"Inactive",
-"SERVER"                  =>	"Server"
+"INACTIVATE"              =>	"Inactivate",
+"INACTIVATED"             =>	"Inactivated",
+"SERVER"                  =>	"Server",
+"CANCELLED"               =>    "Cancelled",
+"PERMITTED"               =>    "Permitted",
+"NOT_PERMITTED"           =>    "Not Permitted",
+"ALLOW"                   =>    "Allow",
+"ALLOWED"                 =>    "Allowed",
+"NOT_ALLOWED"             =>    "Not Allowed",
+"APPROVE"                 =>    "Approve",
+"APPROVED"                =>    "Approved",
+"NOT_APPROVED"            =>    "Not Approved",
+"VALID"                   =>    "Valid",
+"INVALID"                 =>    "Invalid",
+"INVALID_OPER"            =>    "Invalid Operation"
 
 // already defined generics
+# "ENABLE"                =>    "Activate"
+# "DISABLE"               =>	"Deactivate", //plugins.php 
 # "UNDO"                  =>	"Undo",
 # "YES"                   =>	"Yes",
 # "NO"                    =>	"No",
@@ -619,11 +668,13 @@ $i18n = array(
 # "DESCRIPTION"           =>	"Description",
 # "ERROR"                 =>	"Error",
 # "WARNING"               =>	"Warning",
-# "NONE"                  =>	""None",
-# "PAGE"                  =>	""Page",
+# "NONE"                  =>	"None",
+# "PAGE"                  =>	"Page",
 # "DATE"                  =>	"Date",
 # "OK"                    =>	"OK",
+# "DENIED"                =>	"Denied",
+# "SETTINGS"              =>	"Settings",
 
 );
 
-?>
+/* ?> */

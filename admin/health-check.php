@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * Health Check
  *
@@ -14,11 +15,12 @@ $load['plugin'] = true;
 // Include common.php
 include('inc/common.php');
 login_cookie_check();
+
 $php_modules = get_loaded_extensions();
 
 get_template('header', cl($SITENAME).' &raquo; '.i18n_r('SUPPORT').' &raquo; '.i18n_r('WEB_HEALTH_CHECK')); 
 
-$errorCnt = 0;
+$errorCnt = 0; // error counter, for error catch and flag
 
 include('template/include-nav.php'); 
 
@@ -34,35 +36,32 @@ echo '<div class="bodycontent clearfix">
 			<table class="highlight healthcheck">';
 				
 				# check to see if there is a core update needed
-				$data = get_api_details();
-				if ($data)	{
-					$apikey = json_decode($data);
-					$verstatus = $apikey->status;
-				}	else {
-					$verstatus = null;
-				}
+				$verdata   = getVerCheck();
+				$verstatus = $verdata->status;
+				$verstatus = $_GET['status']; // debugging
+				$verstring = sprintf(i18n_r('CURR_VERSION'),'<b>'.$site_version_no.'</b>').'<hr>';
 				if ($verstatus == '0') {
 					// upgrade recomended
-					$ver = '<span id="hc_version" class="label label-error" ><b>'.$site_version_no.'</b><br /> '. i18n_r('UPG_NEEDED').' (<b>'.$apikey->latest .'</b>)<br /><a href="'.$site_link_back_url.'download/">'. i18n_r('DOWNLOAD').'</a></span>';
+					$ver = '<div id="hc_version" class="label label-error" >'.$verstring. i18n_r('UPG_NEEDED').' (<b>'.$verdata->latest .'</b>)<br /><a href="'.$site_link_back_url.'download/">'. i18n_r('DOWNLOAD').'</a></div>';
 				} elseif ($verstatus == '1') {
 					// latest version
-					$ver = '<span id="hc_version" class="label label-ok" ><b>'.$site_version_no.'</b><br />'. i18n_r('LATEST_VERSION').'</span>';
+					$ver = '<div id="hc_version" class="label label-ok" >'.$verstring. i18n_r('LATEST_VERSION').'</div>';
 				} elseif ($verstatus == '2') {
 					// bleeding edge
-					$ver = '<span id="hc_version" class="label label-info" ><b>'.$site_version_no.'</b><br /> '. i18n_r('BETA').'</span>';
+					$ver = '<div id="hc_version" class="label '.(isAlpha() ? 'label-info' : 'label-info' ).'" >'.$verstring. (isAlpha() ? i18n_r('ALPHA') : i18n_r('BETA')) .'</div>';
 				} else {
 					// cannot check
-					$ver = '<span id="hc_version" class="label label-warn" ><b>'.$site_version_no.'</b><br />'. i18n_r('CANNOT_CHECK').'<br /><a href="'.$site_link_back_url.'download">'. i18n_r('DOWNLOAD').'</a></span>';
+					$ver = '<div id="hc_version" class="label label-warn" >'.$verstring. i18n_r('CANNOT_CHECK').'<br /><a href="'.$site_link_back_url.'download">'. i18n_r('CHECK_MANUALLY').'</a></div>';
 				}
 				?>
 				<tr><td class="hc_item" ><?php echo $site_full_name; ?> <?php i18n('VERSION');?></td><td><?php echo $ver; ?></td></tr>
                 <?php 
-                if(defined('GSADMIN') && GSADMIN!='admin') echo '<tr><td>GSADMIN</td><td><span class="hint">'.GSADMIN.'</span></td></tr>'; 
+                if(getDef('GSADMIN') && GSADMIN!='admin') echo '<tr><td>GSADMIN</td><td><span class="hint">'.GSADMIN.'</span></td></tr>';
                 
-                if(defined('GSLOGINSALT') && GSLOGINSALT!='') echo '<tr><td>GSLOGINSALT</td><td><span class="hint">'. i18n_r('YES').'</span></td></tr>'; 
+                if(getDef('GSLOGINSALT') && GSLOGINSALT!='') echo '<tr><td>GSLOGINSALT</td><td><span class="hint">'. i18n_r('YES').'</span></td></tr>';
                 else echo '<tr><td>GSLOGINSALT</td><td><span class="hint">'. i18n_r('NO').'</span></td></tr>'; 
                 
-                if(defined('GSUSECUSTOMSALT') && GSUSECUSTOMSALT!='') echo '<tr><td>GSUSECUSTOMSALT</td><td><span class="hint">'. i18n_r('YES').'</span></td></tr>'; 
+                if(getDef('GSUSECUSTOMSALT') && GSUSECUSTOMSALT!='') echo '<tr><td>GSUSECUSTOMSALT</td><td><span class="hint">'. i18n_r('YES').'</span></td></tr>';
 				else echo '<tr><td>GSUSECUSTOMSALT</td><td><span class="hint">'. i18n_r('NO').'</span></td></tr>';                 
                 ?>
 			</table>
@@ -129,7 +128,7 @@ echo '<div class="bodycontent clearfix">
 							echo '<tr><td>Apache Mod Rewrite</td><td>'.i18n_r('NA').'</td><td><span class="label label-info">'.i18n_r('NA').'</span></td></tr>';
 						}
 					} else {
-						if (!defined('GSNOAPACHECHECK') || GSNOAPACHECHECK == false) {
+						if (!getDef('GSNOAPACHECHECK',true) || GSNOAPACHECHECK == false) {
 							echo '<tr><td>Apache web server*</td><td><span class="ERRmsg" >'.i18n_r('NOT_INSTALLED').'</span></td><td><span class="label label-error">'.i18n_r('ERROR').'</span></td></tr>';
 							$errorCnt++;											
 						}
@@ -144,7 +143,7 @@ echo '<div class="bodycontent clearfix">
 				$serveris = get_Server_Software();
 				if(empty($serveris)) $serveris = i18n_r('NA');
 				echo "*".sprintf(i18n_r('SERVER_IS'), $serveris)."<br/>";
-				echo sprintf(i18n_r('REQS_MORE_INFO'), $site_link_back_url . "wiki/installation:requirements"); ?>
+				echo sprintf(i18n_r('REQS_MORE_INFO'), $site_link_back_url . "docs/requirements"); ?>
 			</p>
 			
 			<?php
@@ -159,7 +158,6 @@ echo '<div class="bodycontent clearfix">
 					$dirsArray = array(
 						GSDATAOTHERPATH, 
 						GSDATAOTHERPATH.'logs/', 
-						GSDATAPAGESPATH,
 						GSBACKUSERSPATH
 					);			
 
@@ -176,20 +174,43 @@ echo '<div class="bodycontent clearfix">
 						sort($data);
 						foreach($data as $file) {
 							if( isFile($file, $path) ) {
-								$relpath = '/'.str_replace(GSROOTPATH,'',$path);
+								$relpath = '/'.getRelPath($path);
 								echo '<tr><td class="hc_item" >'.$relpath . $file .'</td>';
 								if(is_valid_xml($path . $file)){
 									echo '<td>' . i18n_r('XML_VALID').'</td><td><span class="label label-ok">'.i18n_r('OK') .'</span></td>';
 								}									
 								else {
-									if(in_array($path.$file,$filesArray)) echo '<td>' . i18n_r('XML_INVALID').'</td><td><span class="label label-error">'.i18n_r('ERROR') .'</span></td>';
-									else echo '<td>' . i18n_r('XML_INVALID').'</td><td><span class="label label-warn">'.i18n_r('WARNING') .'</span></td>';
+									if(in_array($path.$file,$filesArray)) echo '<td><span class="ERRmsg">' . i18n_r('XML_INVALID').'</span></td><td><span class="label label-error">'.i18n_r('ERROR') .'</span></td>';
+									else echo '<td><span class="WARNmsg">' . i18n_r('XML_INVALID').'</span></td><td><span class="label label-warn">'.i18n_r('WARNING') .'</span></td>';
 									$errorCnt++;													
 								}	
 								echo '</tr>';
 							}							
 						}
 					}
+			
+			echo '</table>';
+
+			echo '<h3>'. i18n_r('PAGE_FILE_CHECK') .'</h3>
+			<table class="highlight healthcheck">';
+
+						$path = GSDATAPAGESPATH;
+						$data = getFiles($path);
+						sort($data);
+						foreach($data as $file) {
+							if( isFile($file, $path) ) {
+								$relpath = '/'.getRelPath($path);
+								echo '<tr><td class="hc_item" >'.$relpath . $file .'</td>';
+								if(is_valid_xml($path . $file)){
+									echo '<td>' . i18n_r('XML_VALID').'</td><td><span class="label label-ok">'.i18n_r('OK') .'</span></td>';
+								}									
+								else {
+									echo '<td><span class="WARNmsg">' . i18n_r('XML_INVALID').'</span></td><td><span class="label label-warn">'.i18n_r('WARNING') .'</span></td>';
+									$errorCnt++;													
+								}	
+								echo '</tr>';
+							}							
+						}
 			
 			echo '</table>';
 			
@@ -211,19 +232,19 @@ echo '<div class="bodycontent clearfix">
 						GSUSERSPATH,
 						GSCACHEPATH,
 						GSBACKUPSPATH.'zip/',
-						GSBACKUPSPATH.'pages/',
-						GSBACKUPSPATH.'other/',
+						GSBACKUPSPATH.getRelPath(GSDATAPAGESPATH,GSDATAPATH), // backups/pages/
+						GSBACKUPSPATH.getRelPath(GSDATAOTHERPATH,GSDATAPATH), // backups/other/
 						GSBACKUSERSPATH
 					);		
 
-					if (defined('GSCHMOD')) { 
+					if (getDef('GSCHMOD')) {
 						$writeOctal = GSCHMOD; 
 					} else {
 						$writeOctal = 0755;
 					}
 
 					foreach($dirsArray as $path){
-						$relpath = '/'.str_replace(GSROOTPATH,'',$path);
+						$relpath = '/'.getRelPath($path);
 						$isFile = substr($relpath, -4,1) == '.';
 						if(!$isFile) $writeOctal = 0744;
 
@@ -232,7 +253,7 @@ echo '<div class="bodycontent clearfix">
 						echo "<tr><td class=\"hc_item\">$relpath</td><td>";
 						
 						if($isFile and !file_exists($path)) {
-							echo '<span class="ERRmsg">'.i18n_r('MISSING_FILE').'</span><td><span class="label label-error" >'.i18n_r('ERROR').'</span></td>'; 							
+							echo '<a name="error"></a><span class="ERRmsg">'.i18n_r('MISSING_FILE').'</span><td><span class="label label-error" >'.i18n_r('ERROR').'</span></td>'; 							
 							$errorCnt++;				
 							continue;
 						}
@@ -243,7 +264,7 @@ echo '<div class="bodycontent clearfix">
 							echo i18n_r('WRITABLE').'<td><span class="label label-ok" > '.i18n_r('OK').'</span></td>'; 
 						} 
 						else { 
-							echo '<span class="ERRmsg">'.i18n_r('NOT_WRITABLE').'</span><td><span class="label label-error" >'.i18n_r('ERROR').'</span></td>'; 
+							echo '<a name="error"></a><span class="ERRmsg">'.i18n_r('NOT_WRITABLE').'</span><td><span class="label label-error" >'.i18n_r('ERROR').'</span></td>'; 
 							$errorCnt++;											
 						} 
 						echo '</td></tr>';
@@ -286,7 +307,7 @@ echo '<div class="bodycontent clearfix">
 					);						
 
 					foreach($dirsArray as $path){
-						$relpath = '/'.str_replace(GSROOTPATH,'',$path);
+						$relpath = '/'.getRelPath($path);
 						echo "<tr><td class=\"hc_item\" >$relpath</td>";
 						
 						$file = $path.".htaccess";
@@ -340,7 +361,6 @@ echo '<div class="bodycontent clearfix">
 						echo "</tr>";						
 					}	
 
-					
 				echo '</table>';
 			}
 
@@ -355,10 +375,11 @@ echo '<div class="bodycontent clearfix">
 		<?php 
 		include('template/sidebar-support.php'); 
 		if($errorCnt > 0){
-			echo '<div id="hc_alert">'.i18n_r('STATUS').': <span class="label label-error">'.i18n_r('ERROR').'</span></div>';
+			echo '<div id="hc_alert">'.i18n_r('STATUS').': <a href="#error"><span class="label label-error">'.i18n_r('ERROR').'</span></a></div>';
 		}
 		?>
 	</div>	
 
 </div>
+
 <?php get_template('footer'); ?>

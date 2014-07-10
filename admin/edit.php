@@ -13,16 +13,17 @@ $load['plugin'] = true;
 
 // Include common.php
 include('inc/common.php');
+login_cookie_check();
 
 // Variable settings
-$userid = login_cookie_check();
 
 // Get passed variables
-$id    = isset($_GET['id'])    ? var_out( $_GET['id']    ): null;
-$uri   = isset($_GET['uri'])   ? var_out( $_GET['uri']   ): null; 
-$ptype = isset($_GET['type'])  ? var_out( $_GET['type']  ): null;    
-$nonce = isset($_GET['nonce']) ? var_out( $_GET['nonce'] ): null;
+$id    = isset($_GET['id'])    ? var_in( $_GET['id']    ): null;
+$uri   = isset($_GET['uri'])   ? var_in( $_GET['uri']   ): null;
+$ptype = isset($_GET['type'])  ? var_in( $_GET['type']  ): null;
+$nonce = isset($_GET['nonce']) ? var_in( $_GET['nonce'] ): null;
 $path  = GSDATAPAGESPATH;
+$bakpagespath = GSBACKUPSPATH .getRelPath(GSDATAPAGESPATH,GSDATAPATH); // backups/pages/                    
 
 // Page variables reset
 $theme_templates = ''; 
@@ -72,20 +73,20 @@ if ($id){
     $metarNoArchive = $data_edit->metarNoArchive;
 } else {
     // prefill fields is provided
-    $title          =  isset( $_GET['title']      ) ? var_out( $_GET['title']      ) : '';
-    $template       =  isset( $_GET['template']   ) ? var_out( $_GET['template']   ) : '';
-    $parent         =  isset( $_GET['parent']     ) ? var_out( $_GET['parent']     ) : '';
-    $menu           =  isset( $_GET['menu']       ) ? var_out( $_GET['menu']       ) : '';
-    $private        =  isset( $_GET['private']    ) ? var_out( $_GET['private']    ) : '';
-    $menuStatus     =  isset( $_GET['menuStatus'] ) ? var_out( $_GET['menuStatus'] ) : '';
-    $menuOrder      =  isset( $_GET['menuOrder']  ) ? var_out( $_GET['menuOrder']  ) : '';
+    $title          =  isset( $_GET['title']      ) ? var_in( $_GET['title']      ) : '';
+    $template       =  isset( $_GET['template']   ) ? var_in( $_GET['template']   ) : '';
+    $parent         =  isset( $_GET['parent']     ) ? var_in( $_GET['parent']     ) : '';
+    $menu           =  isset( $_GET['menu']       ) ? var_in( $_GET['menu']       ) : '';
+    $private        =  isset( $_GET['private']    ) ? var_in( $_GET['private']    ) : '';
+    $menuStatus     =  isset( $_GET['menuStatus'] ) ? var_in( $_GET['menuStatus'] ) : '';
+    $menuOrder      =  isset( $_GET['menuOrder']  ) ? var_in( $_GET['menuOrder']  ) : '';
     
-    $titlelong      =  isset( $_GET['titlelong']  ) ? var_out( $_GET['titlelong']  ) : '';
-    $summary        =  isset( $_GET['summary']    ) ? var_out( $_GET['summary']    ) : '';
+    $titlelong      =  isset( $_GET['titlelong']  ) ? var_in( $_GET['titlelong']  ) : '';
+    $summary        =  isset( $_GET['summary']    ) ? var_in( $_GET['summary']    ) : '';
     
-    $metarNoIndex   =  isset( $_GET['metarNoIndex'] )   ? var_out( $_GET['metarNoIndex'] ) : '';
-    $metarNoFollow  =  isset( $_GET['metarNoFollow'] )  ? var_out( $_GET['metarNoFollow'] ) : '';
-    $metarNoArchive =  isset( $_GET['metarNoArchive'] ) ? var_out( $_GET['metarNoArchive'] ) : '';
+    $metarNoIndex   =  isset( $_GET['metarNoIndex'] )   ? var_in( $_GET['metarNoIndex'] ) : '';
+    $metarNoFollow  =  isset( $_GET['metarNoFollow'] )  ? var_in( $_GET['metarNoFollow'] ) : '';
+    $metarNoArchive =  isset( $_GET['metarNoArchive'] ) ? var_in( $_GET['metarNoArchive'] ) : '';
 
     $buttonname = i18n_r('BTN_SAVEPAGE');
 }
@@ -123,11 +124,11 @@ foreach ($templates as $file){
 }
 
 // SETUP CHECKBOXES
-$sel_m  = ($menuStatus != '') ? 'checked' : '' ;
-$sel_p  = ($private == 'Y') ? 'selected' : '' ;
-$sel_ri = $metarNoIndex == '1' ? 'checked' : '';
-$sel_rf = $metarNoFollow == '1' ? 'checked' : '';
-$sel_ra = $metarNoArchive == '1' ? 'checked' : '';
+$sel_m  = ($menuStatus != '') ?    'checked'  : '';
+$sel_p  = ($private == 'Y') ?      'selected' : '';
+$sel_ri = $metarNoIndex == '1' ?   'checked'  : '';
+$sel_rf = $metarNoFollow == '1' ?  'checked'  : '';
+$sel_ra = $metarNoArchive == '1' ? 'checked'  : '';
 
 if ($menu == '') { $menu = $title; } 
 
@@ -148,10 +149,13 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
         <div class="edit-nav" >
             <?php 
             if(isset($id)) {
-                echo '<a href="', find_url($url, $parent) ,'" target="_blank" accesskey="', find_accesskey(i18n_r('VIEW')), '" >', i18n_r('VIEW'), ' </a>';
+                echo '<a href="'. find_url($url, $parent) .'" target="_blank" accesskey="'. find_accesskey(i18n_r('VIEW')). '" >'. i18n_r('VIEW'). '</a>';
+                if($url != '') {echo '<a href="pages.php?id='. $url .'&amp;action=clone&amp;nonce='.get_nonce("clone","pages.php").'" >'.i18n_r('CLONE').'</a>'; }
+                echo '<span class="save-close"><a href="javascript:void(0)" >'.i18n_r('SAVE_AND_CLOSE').'</a></span>';
             } 
             ?>
-            <!-- <a href="#" id="metadata_toggle" accesskey="<?php echo find_accesskey(i18n_r('PAGE_OPTIONS'));?>" ><?php i18n('PAGE_OPTIONS'); ?></a> -->
+            <!-- @todo: fix accesskey for options  -->
+            <!-- <a href="javascript:void(0)" id="metadata_toggle" accesskey="<?php echo find_accesskey(i18n_r('PAGE_OPTIONS'));?>" ><?php i18n('PAGE_OPTIONS'); ?></a> -->
             <div class="clear" ></div>
         </div>  
             
@@ -287,12 +291,13 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
 
 <!-- ------- PAGE CONTENT --------------------------------------------------- -->            
             <div id="page_content" class="tab">
+            <?php if (empty($HTMLEDITOR)) { ?>
             <fieldset>
             <legend>Page Content</legend>
-                
+            <?php } ?>
 
                 <label for="post-content" style="display:none;"><?php i18n('LABEL_PAGEBODY'); ?></label>
-                <textarea id="post-content" name="post-content"><?php echo $content; ?></textarea>
+                <div class="codewrap"><textarea id="post-content" class="boxsizingBorder" name="post-content"><?php echo $content; ?></textarea></div>
             
             <?php exec_action('edit-content'); ?> 
             
@@ -302,8 +307,10 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
             
         // HTMLEDITOR INIT
         if ($HTMLEDITOR != '') {       
-            
-            if($EDTOOL == 'basic' || $EDTOOL == 'advanced') $EDTOOL = "'$EDTOOL'";          
+
+			if(isset($EDTOOL)) $EDTOOL = returnJsArray($EDTOOL);
+			if(isset($toolbar)) $toolbar = returnJsArray($toolbar); // handle plugins that corrupt this
+
 			$toolbar = isset($EDTOOL) ? ",toolbar: ".trim($EDTOOL,",") : '';
 			$options = isset($EDOPTIONS) ? ','.trim($EDOPTIONS,",") : '';
 
@@ -318,58 +325,52 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
 
             if (file_exists(GSTHEMESPATH .$TEMPLATE."/editor.css")) { 
                 $fullpath = suggest_site_path();
-                $contentsCss = $fullpath.'theme/'.$TEMPLATE.'/editor.css';
+                $contentsCss = $fullpath.getRelPath(GSTHEMESPATH).$TEMPLATE.'/editor.css';
             }
 
 		?>
-        <script type="text/javascript" src="template/js/ckeditor/ckeditor.js"></script>
 
         <script type="text/javascript">
             
             var editorCfg = {
-                skin : 'getsimple',
-                forcePasteAsPlainText        : true,
                 language                     : '<?php echo $EDLANG; ?>',
-                defaultLanguage              : 'en',
-                <?php if(!empty($contentsCss)) echo "contentCss                   : '$contentsCss',"; ?>
-                entities                     : false,
-                uiColor                      : '#DDDDDD',
+                <?php if(!empty($contentsCss)) echo "contentsCss                   : '$contentsCss',"; ?>
                 height                       : '<?php echo $EDHEIGHT; ?>',
-                baseHref                     : '<?php echo $SITEURL; ?>',
-                tabSpaces                    : 10,
-                filebrowserBrowseUrl         : 'filebrowser.php?type=all',
-                filebrowserImageBrowseUrl    : 'filebrowser.php?type=images',
-                filebrowserWindowWidth       : '730',
-                filebrowserWindowHeight      : '500'
+                baseHref                     : '<?php echo $SITEURL; ?>'
 					<?php echo $toolbar; ?>
-					<?php echo $options; ?>					
+					<?php echo $options; ?>
 			};
             
-            var editor = CKEDITOR.replace( 'post-content', editorCfg);            
-            CKEDITOR.instances["post-content"].on("instanceReady", InstanceReadyEvent);
+            var editor = CKEDITOR.replace( 'post-content',editorCfg);         
 
-            function InstanceReadyEvent(ev) {
-                _this = this;
+            // ctr+s save handler
+            CKEDITOR.on('instanceReady', function (ev) {
+                ev.editor.setKeystroke(CKEDITOR.CTRL + 83 /*S*/, 'customSave' );              
+            });
 
-                this.document.on("keyup", function () {
-                    $('#editform #post-content').trigger('change');
-                    _this.resetDirty();
-                });
-
-                this.timer = setInterval(function(){trackChanges(_this)},500);
-            }       
-
-            /**
-             * keep track of changes for editor
-             * until cke 4.2 is released with onchange event
-             */
-            function trackChanges(editor) {
-                // console.log('check changes');
-                if ( editor.checkDirty() ) {
-                    $('#editform #post-content').trigger('change');
-                    editor.resetDirty();            
+            // custom save function
+            editor.addCommand( 'customSave',{
+                exec : function( editor ){
+                    // Debugger.log('customsave');
+                    dosave(); // gs global save function
                 }
-            };
+            });
+            
+            // on change listener for cke ( source mode not supported )
+            editor.on( 'change', function() {
+                // Debugger.log('cke change');
+                $('#editform #post-content').trigger('change');                
+            });
+            
+            // onchange listener for cke source mode
+            editor.on( 'mode', function() {
+                if ( this.mode == 'source' ) {
+                    var editable = editor.editable();
+                    editable.attachListener( editable, 'input', function() {
+                        $('#editform #post-content').trigger('change');
+                    } );
+                }
+            } );
 
         </script>
             
@@ -409,14 +410,14 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
 
             jQuery(document).ready(function() { 
 
-            <?php if (defined('GSAUTOSAVE') && (int)GSAUTOSAVE != 0) { /* IF AUTOSAVE IS TURNED ON via GSCONFIG.PHP */ ?>   
+            <?php if (getDef('GSAUTOSAVE',true) && (int)GSAUTOSAVE != 0) { /* IF AUTOSAVE IS TURNED ON via GSCONFIG.PHP */ ?>
 
                     $('#pagechangednotify').hide();
                     $('#autosavenotify').show();
                     $('#autosavenotify').html('Autosaving is <b>ON</b> (<?php echo (int)GSAUTOSAVE; ?> s)');                
                     
                     function autoSaveIntvl(){
-                        // console.log('autoSaveIntvl called, isdirty:' + pageisdirty);
+                        // Debugger.log('autoSaveIntvl called, isdirty:' + pageisdirty);
                         if(pageisdirty == true){
                             autoSave();
                             pageisdirty = false;
@@ -474,7 +475,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
                     });
                 
                 setInterval(autoSaveIntvl, <?php echo (int)GSAUTOSAVE*1000; ?>);
-                
+
                 <?php } else { /* AUTOSAVE IS NOT TURNED ON */ ?>
                     $('#editform').bind('change keypress paste focus textInput input',function(){                   
                         warnme      = true;
@@ -491,7 +492,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
                     }
             });
         </script>
-        </fieldset>
+        <?php if (empty($HTMLEDITOR)) echo '</fieldset>'; ?>
         </div> 
         <!-- / END PAGE CONTENT -->
 
@@ -527,7 +528,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
             </fieldset>            
         </div>
     </div> <!-- / END TABS -->
-                <span class="editing"><?php echo i18n_r('EDITPAGE_TITLE') .':' . $title; ?></span>
+                <span class="editing"><?php echo i18n_r('EDITPAGE_TITLE') .': ' . $title; ?></span>
             <div id="submit_line" >
                 <input type="hidden" name="redirectto" value="" />
                 
@@ -536,7 +537,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
                 <div id="dropdown">
                     <h6 class="dropdownaction"><?php i18n('ADDITIONAL_ACTIONS'); ?></h6>
                     <ul class="dropdownmenu">
-                        <li id="save-close" ><a href="#" ><?php i18n('SAVE_AND_CLOSE'); ?></a></li>
+                        <li class="save-close" ><a href="javascript:void(0)" ><?php i18n('SAVE_AND_CLOSE'); ?></a></li>
                         <?php if($url != '') { ?>
                             <li><a href="pages.php?id=<?php echo $url; ?>&amp;action=clone&amp;nonce=<?php echo get_nonce("clone","pages.php"); ?>" ><?php i18n('CLONE'); ?></a></li>
                         <?php } ?>
@@ -554,7 +555,7 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('EDIT').' '.$title);
                     if (isset($pubDate)) { 
                         echo sprintf(i18n_r('LAST_SAVED'), '<em>'.$author.'</em>').' '. lngDate($pubDate).'&nbsp;&nbsp; ';
                     }
-                    if ( file_exists(GSBACKUPSPATH.'pages/'.$url.'.bak.xml') ) {    
+                    if ( file_exists($bakpagespath.$url.'.bak.xml') ) {    
                         echo '&bull;&nbsp;&nbsp; <a href="backup-edit.php?p=view&amp;id='.$url.'" target="_blank" >'.i18n_r('BACKUP_AVAILABLE').'</a>';
                     } 
                 ?></p>

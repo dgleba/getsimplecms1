@@ -1,4 +1,4 @@
-<?php
+<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); }
 /**
  * Security
  *
@@ -24,6 +24,7 @@ $mime_type_blacklist = array(
 	# and thus blacklisted just as other zip files
 	'application/x-opc+zip'
 );
+
 $file_ext_blacklist = array(
 	# HTML may contain cookie-stealing JavaScript and web bugs
 	'html', 'htm', 'js', 'jsb', 'mhtml', 'mht',
@@ -56,14 +57,17 @@ function antixss($str){
 	$str = preg_replace('#<!--.*?-->?#', '', $str);
 	$str = preg_replace('#<!--#', '', $str);
 	$str = preg_replace('#(<[a-z]+(\s+[a-z][a-z\-]+\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*))*)\s+href\s*=\s*(\'javascript:[^\']*\'|"javascript:[^"]*"|javascript:[^\s>]*)((\s+[a-z][a-z\-]*\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*))*\s*>)#is', '$1$5', $str);
+	
 	foreach($attr as $a) {
 	    $regex = '(<[a-z]+(\s+[a-z][a-z\-]+\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*))*)\s+'.$a.'\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*)((\s+[a-z][a-z\-]*\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*))*\s*>)';
-	    $str = preg_replace('#'.$regex.'#is', '$1$5', $str);
+	    $str   = preg_replace('#'.$regex.'#is', '$1$5', $str);
 	}
+
 	foreach($elem as $e) {
 		$regex = '<'.$e.'(\s+[a-z][a-z\-]*\s*=\s*(\'[^\']*\'|"[^"]*"|[^\'">][^\s>]*))*\s*>.*?<\/'.$e.'\s*>';
-	    $str = preg_replace('#'.$regex.'#is', '', $str);
+	    $str   = preg_replace('#'.$regex.'#is', '', $str);
 	}
+
 	return $str;
 }
 
@@ -77,7 +81,7 @@ function antixss($str){
  */
 function check_for_csrf($action, $file="", $die = true){
 	// check for csrf
-	if (!defined('GSNOCSRF') || (GSNOCSRF == FALSE) ) {
+	if (!getDef('GSNOCSRF',true) || (GSNOCSRF == FALSE) ) {
 		$nonce = $_REQUEST['nonce'];
 		if(!check_nonce($nonce, $action, $file)) {
 			if($die) die("CSRF detected!");
@@ -103,7 +107,11 @@ function check_for_csrf($action, $file="", $die = true){
 function get_nonce($action, $file = "", $last = false) {
 	global $USR;
 	global $SALT;
-	
+
+	// set nonce_timeout default and clamps
+	include_once(GSADMININCPATH.'configuration.php');
+	clamp($nonce_timeout, 60, 86400, 3600);// min, max, default in seconds
+
 	if($file == "")
 		$file = $_SERVER['PHP_SELF'];
 	
@@ -111,7 +119,7 @@ function get_nonce($action, $file = "", $last = false) {
 	$uid = $_SERVER['HTTP_USER_AGENT'];
 	
 	// Limits Nonce to one hour
-	$time = $last ? time() - 3600: time(); 
+	$time = $last ? time() - $nonce_timeout: time(); 
 	
 	// Mix with a little salt
 	$hash=sha1($action.$file.$uid.$USR.$SALT.@date('YmdH',$time));
@@ -177,16 +185,17 @@ function validate_safe_file($file, $name, $mime){
 
 /**
  * Checks that an existing filepath is safe to use by checking canonicalized absolute pathname.
+ * @todo fails if file does not exist
  *
  * @since 3.1.3
  *
- * @param string $path Unknown Path to file to check for safety
+ * @param string $filepath Unknown Path to file to check for safety
  * @param string $pathmatch Known Path to parent folder to check against
  * @param bool $subdir allow path to be a deeper subfolder
  * @return bool Returns true if files path resolves to your known path
  */
-function filepath_is_safe($path,$pathmatch,$subdir = true){
-	$realpath = realpath($path);
+function filepath_is_safe($filepath,$pathmatch,$subdir = true){
+	$realpath      = realpath($filepath);
 	$realpathmatch = realpath($pathmatch);
 	if($subdir) return strpos(dirname($realpath),$realpathmatch) === 0;
 	return dirname($realpath) == $realpathmatch;
@@ -204,10 +213,14 @@ function filepath_is_safe($path,$pathmatch,$subdir = true){
  *
  */
 function path_is_safe($path,$pathmatch,$subdir = true){
-	$realpath = realpath($path);
+	$realpath      = realpath($path);
 	$realpathmatch = realpath($pathmatch);
 	if($subdir) return strpos($realpath,$realpathmatch) === 0;
 	return $realpath == $realpathmatch;
+}
+
+function subDir_is_safe($path,$dir){
+	return path_is_safe($path.$dir,$path);
 }
 
 /**
@@ -253,3 +266,10 @@ function var_out($var,$filter = "special"){
 		return htmlentities($var);
 	}
 }
+
+//alias var_out for inputs in case we ned to diverge in future
+function var_in($var,$filter = 'special'){
+	return var_out($var,$filter);
+}
+
+/* ?> */

@@ -1,19 +1,53 @@
+#
+# GetSimple CMS htaccess ROOT file
+# apache 2.4 
+#
+
+# The following require certain allow overrides, if getting 500 error comment them out one by one 
+# can be resolved in apache httpd.conf to ensure security alternatives
+
+# override charset
 AddDefaultCharset UTF-8
+
+# prevent directory listings
 Options -Indexes
+
+# Follow symbolink links, This is required for rewrites on some hosts
+Options +FollowSymLinks
+
+# Set the default handler.
+DirectoryIndex index.php
 
 # blocks direct access to the XML files - they hold all the data!
 <Files ~ "\.xml$">
-    Order allow,deny
+	<IfModule !mod_authz_core.c>
     Deny from all
-    Satisfy All
+	</IfModule>
+	<IfModule mod_access_compat.c>
+		Deny from all
+	</IfModule>
+	<IfModule mod_authz_core.c>
+		<IfModule !mod_access_compat.c>
+		Require all denied
+	</IfModule>
+	</IfModule>	
 </Files>
+
 <Files sitemap.xml>
-		Order allow,deny
+	<IfModule !mod_authz_core.c>
     Allow from all
-    Satisfy All
+	</IfModule>
+	<IfModule mod_access_compat.c>
+		Allow from all
+	</IfModule>
+	<IfModule mod_authz_core.c>
+		<IfModule !mod_access_compat.c>
+		Require all granted
+	</IfModule>
+	</IfModule>	
 </Files>
 
-
+# handle rewrites for fancy urls
 <IfModule mod_rewrite.c>
 
 	# Tell PHP that the mod_rewrite module is ENABLED.
@@ -21,12 +55,11 @@ Options -Indexes
 
 	RewriteEngine on
 
-	# Usually it RewriteBase is just '/', but 
+	# Usually RewriteBase is just '/', but 
 	# replace it with your subdirectory path
 	RewriteBase /getsimplecms1/
 
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule /?([A-Za-z0-9_-]+)/?$ index.php?id=$1 [QSA,L]
-
 </IfModule>

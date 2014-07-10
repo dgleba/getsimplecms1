@@ -18,7 +18,7 @@
  */
 function clean_url($text)  { 
 	$text = strip_tags(lowercase($text)); 
-	$code_entities_match = array(' ?',' ','--','&quot;','!','@','#','$','%','^','&','*','(',')','+','{','}','|',':','"','<','>','?','[',']','\\',';',"'",',','/','*','+','~','`','=','.'); 
+	$code_entities_match   = array(' ?',' ','--','&quot;','!','@','#','$','%','^','&','*','(',')','+','{','}','|',':','"','<','>','?','[',']','\\',';',"'",',','/','*','+','~','`','=','.'); 
 	$code_entities_replace = array('','-','-','','','','','','','','','','','','','','','','','','','','','','','',''); 
 	$text = str_replace($code_entities_match, $code_entities_replace, $text); 
 	$text = urlencode($text);
@@ -39,11 +39,12 @@ function clean_url($text)  {
  */
 function clean_img_name($text)  { 
 	$text = strip_tags(lowercase($text)); 
-	$code_entities_match = array(' ?',' ','--','&quot;','!','@','#','$','%','^','&','*','(',')','+','{','}','|',':','"','<','>','?','[',']','\\',';',"'",',','/','*','+','~','`','='); 
-	$code_entities_replace = array('','-','-','','','','','','','','','','','','','','','','','','','','','','',''); 
+	$code_entities_match   = array(' ?',' ','--','&quot;','!','#','$','%','^','&','*','(',')','+','{','}','|',':','"','<','>','?','[',']','\\',';',"'",',','/','*','+','~','`','='); 
+	$code_entities_replace = array('','-','-','','','','','','','','','','','','','','','','','','','','','',''); 
 	$text = str_replace($code_entities_match, $code_entities_replace, $text); 
 	$text = urlencode($text);
 	$text = str_replace('--','-',$text);
+	$text = str_replace('%40','@',$text); // ensure @ is not encoded
 	$text = rtrim($text, "-");
 	return $text; 
 } 
@@ -143,7 +144,7 @@ function sendmail($to,$subject,$message) {
 	
 	$message = email_template($message);
 
-	if (defined('GSFROMEMAIL')){
+	if (getDef('GSFROMEMAIL')){
 		$fromemail = GSFROMEMAIL; 
 	} else {
 		if(!empty($_SERVER['SERVER_ADMIN']) && check_email_address($_SERVER['SERVER_ADMIN'])) $fromemail = $_SERVER['SERVER_ADMIN'];
@@ -194,7 +195,7 @@ function subval_sort($a,$subkey, $order='asc',$natural = true) {
 		}
 		
 		foreach($b as $key=>$val) {
-			$c[] = $a[$key];
+			$c[$key] = $a[$key];
 		}
 
 		return $c;
@@ -213,9 +214,9 @@ function subval_sort($a,$subkey, $order='asc',$natural = true) {
  */
 class SimpleXMLExtended extends SimpleXMLElement{   
 	public function addCData($cdata_text){   
-	 $node= dom_import_simplexml($this);   
-	 $no = $node->ownerDocument;   
-	 $node->appendChild($no->createCDATASection($cdata_text));   
+	$node = dom_import_simplexml($this);   
+	$no   = $node->ownerDocument;   
+	$node->appendChild($no->createCDATASection($cdata_text));   
 	} 
 } 
 
@@ -246,16 +247,25 @@ function isFile($file, $path, $type = 'xml') {
  * @since 1.0
  *
  * @param string $path
+ * @param string $ext optional file extensions to filter
  * @return array
  */
-function getFiles($path) {
-	$handle = opendir($path) or die("getFiles: Unable to open $path");
+function getFiles($path,$ext = null) {
+	$handle   = opendir($path) or die("getFiles: Unable to open $path");
 	$file_arr = array();
+
 	while ($file = readdir($handle)) {
-		if ($file != '.' && $file != '..') {
-			$file_arr[] = $file;
+		if(isset($ext)){
+			$fileext = lowercase(pathinfo($file, PATHINFO_EXTENSION));
+			if ($fileext == $ext) $file_arr[] = $file;
 		}
+		else {
+			if ($file != '.' && $file != '..') {
+				$file_arr[] = $file;
+			}
+		}	
 	}
+
 	closedir($handle);
 	return $file_arr;
 }
@@ -268,14 +278,16 @@ function getFiles($path) {
  * @return array
  */
 function getXmlFiles($path) {
-	$handle = opendir($path) or die("Unable to open $path");
+	$handle   = opendir($path) or die("Unable to open $path");
 	$file_arr = array();
+
 	while ($file = readdir($handle)) {
 		$ext = lowercase(pathinfo($file, PATHINFO_EXTENSION));
 		if ($ext == 'xml') {
 			$file_arr[] = $file;
 		}
 	}
+
 	closedir($handle);
 	return $file_arr;
 }
@@ -336,11 +348,39 @@ function XMLsave($xml, $file) {
 	$success = @$xml->asXML($file) === TRUE;
 	# debugLog('XMLsave: ' . $file . ' ' . get_execution_time());	
 	
-	if (defined('GSCHMOD')) {
+	if (getDef('GSCHMOD')) {
 		return $success && chmod($file, GSCHMOD);
 	} else {
 		return $success && chmod($file, 0755);
 	}
+}
+
+/**
+ * Date Formated Output
+ * @since  3.4.0
+ * @author  cnb
+ * 
+ * @param  string $format    A strftime or date format
+ * @param  time $timestamp   A timestamp
+ * @return string            returns a formated date string
+  */
+function formatDate($format, $timestamp = null) {
+	if(!$timestamp) $timestamp = time();	
+
+	if (strpos($format, '%') === false) {
+		$date = date($format, $timestamp);
+	} 
+	else {
+		if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
+		  # fixes for Windows
+		  $format = preg_replace('#(?<!%)((?:%%)*)%e#', '\1%#d', $format); // strftime %e parameter not supported
+		  $date   = utf8_encode(strftime($format, $timestamp)); // strftime returns ISO-8859-1 encoded string
+		} else {
+		  $date = strftime($format, $timestamp);
+		}
+ 	}
+  
+	return $date;
 }
 
 /**
@@ -357,10 +397,11 @@ function lngDate($dt) {
 	global $i18n;
 	
 	if (!$dt) {
-		$data = date(i18n_r('DATE_AND_TIME_FORMAT'));
+		$data = formatDate(i18n_r('DATE_AND_TIME_FORMAT'));
 	} else {
-		$data = date(i18n_r('DATE_AND_TIME_FORMAT'), strtotime($dt));
+		$data = formatDate(i18n_r('DATE_AND_TIME_FORMAT'), strtotime($dt));
 	}
+
 	return $data;
 }
 
@@ -378,10 +419,11 @@ function shtDate($dt) {
 	global $i18n;
 	
 	if (!$dt) {
-		$data = date(i18n_r('DATE_FORMAT'));
+		$data = formatDate(i18n_r('DATE_FORMAT'));
 	} else {
-		$data = date(i18n_r('DATE_FORMAT'), strtotime($dt));
+		$data = formatDate(i18n_r('DATE_FORMAT'), strtotime($dt));
 	}
+
 	return $data;
 }
 
@@ -426,7 +468,7 @@ function tsl($path) {
  */
 if(!function_exists('in_arrayi')) {
 	function in_arrayi($needle, $haystack) {
-			return in_array(lowercase($needle), array_map('lowercase', $haystack));
+		return in_array(lowercase($needle), array_map('lowercase', $haystack));
 	}
 }
 
@@ -479,7 +521,7 @@ function find_url($slug, $parent, $type='full') {
 		}
 	}
 	
-	if ($PERMALINK != '' && $slug != 'index'){
+	if (trim($PERMALINK) != '' && $slug != 'index'){
 		$plink = str_replace('%parent%/', $parent, $PERMALINK);
 		$plink = str_replace('%parent%', $parent, $plink);
 		$plink = str_replace('%slug%', $slug, $plink);
@@ -531,11 +573,13 @@ function strip_quotes($text)  {
  */
 function encode_quotes($text)  { 
 	$text = strip_tags($text);
+
 	if (version_compare(PHP_VERSION, "5.2.3")  >= 0) {	
 		$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8', false);
 	} else {	
 		$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 	}
+
 	return trim($text); 
 } 
 
@@ -552,14 +596,18 @@ function redirect($url) {
 
 	// handle expired sessions for ajax requests
 	if(requestIsAjax() && !cookie_check()){
-		header('HTTP/1.1 401 Unauthorized', true, 401);
+		header('HTTP/1.1 401 Unauthorized');
 		header('WWW-Authenticate: FormBased');
+		// @note this is not a security function for ajax, just a handler
 		die();
 	}	
+
+	if(function_exists('exec_action')) exec_action('redirect');
 
 	if (!headers_sent($filename, $linenum)) {
 		header('Location: '.$url);
 	} else {
+		// @todo not sure this ever gets used or headers_sent is reliable ( turn output buffering off to test )
 		echo "<html><head><title>".i18n_r('REDIRECT')."</title></head><body>";
 		if ( !isDebug() ) {
 			echo '<script type="text/javascript">';
@@ -569,20 +617,23 @@ function redirect($url) {
 			echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
 			echo '</noscript>';
 		}
+
 		echo i18n_r('ERROR').": Headers already sent in ".$filename." on line ".$linenum."<br/><br/>\n\n";
 		printf(i18n_r('REDIRECT_MSG'), $url);
 
 		if(!isAuthPage()) {
-		if (isDebug()){
-			global $GS_debug;
-			echo '<h2>'.i18n_r('DEBUG_CONSOLE').'</h2><div id="gsdebug">';
-			echo '<pre>';
-			foreach ($GS_debug as $log){
-				print($log.'<br/>');
+			if (isDebug()){
+				global $GS_debug;
+				echo '<h2>'.i18n_r('DEBUG_CONSOLE').'</h2><div id="gsdebug">';
+				echo '<pre>';
+
+				foreach ($GS_debug as $log){
+					print($log.'<br/>');
+				}
+
+				echo '</pre>';	
+				echo '</div>';
 			}
-			echo '</pre>';	
-			echo '</div>';
-		}
 		}
 		
 		echo "</body></html>";
@@ -610,26 +661,24 @@ function i18n($name, $echo=true) {
 	global $i18n;
 	global $LANG;
 
-	if(!isset($i18n)) return; 
+	if(isset($i18n)){
 
-	if (array_key_exists($name, $i18n)) {
-		$myVar = $i18n[$name];
-	} else {
-		# this messes with the global $i18n
-		//include_once(GSLANGPATH . 'en_US.php');
-		if (array_key_exists($name, $i18n)) {
+		if (isset($i18n[$name])) {
 			$myVar = $i18n[$name];
 		} else {
 			$myVar = '{'.$name.'}';
 		}
 	}
-	
+	else {
+		$myVar = '{'.$name.'}'; // if $i18n doesnt exist yet return something
+	}
+
 	if (!$echo) {
 		return $myVar;
 	} else {
 		echo $myVar;
 	}
-} 
+}
 
 /**
  * Return i18n
@@ -680,19 +729,35 @@ function i18n_merge($plugin, $language=null) {
  * @param string $globali18n
  * @return bool
  */
-function i18n_merge_impl($plugin, $lang, &$globali18n) { 
-	$i18n = array();
-  $filename = ($plugin ? GSPLUGINPATH.$plugin.'/lang/' : GSLANGPATH).$lang.'.php';
-  $prefix = $plugin ? $plugin.'/' : '';
-  if (!file_exists($filename)) {
-    return false;
+function i18n_merge_impl($plugin = '', $lang, &$globali18n) {
+
+	$i18n = array(); // local from file
+	if(!isset($globali18n)) $globali18n = array(); //global ref to $i18n
+
+	$path     = (isset($plugin) && $plugin !=='' ? GSPLUGINPATH.$plugin.'/lang/' : GSLANGPATH);
+	$filename = $path.$lang.'.php';
+	$prefix   = $plugin ? $plugin.'/' : '';
+
+	if (!filepath_is_safe($filename,$path) || !file_exists($filename)) {
+		return false;
 	}
-  @include($filename); 
-	if (count($i18n) > 0) foreach ($i18n as $code => $text) {
-    if (!array_key_exists($prefix.$code, $globali18n)) {
-        $globali18n[$prefix.$code] = $text;
+
+	include($filename); 
+
+	// if core lang and glboal is empty assign
+	if(!$plugin && !$globali18n && count($i18n) > 0){
+		$globali18n = $i18n;
+	 	return true;
+	}
+
+	// replace on per key basis
+	if (count($i18n) > 0){
+		foreach ($i18n as $code => $text) {
+			if (!array_key_exists($prefix.$code, $globali18n)) {
+				$globali18n[$prefix.$code] = $text;
+			}
 		}
-	}
+	} 
 	return true;
 }
 
@@ -711,11 +776,53 @@ function safe_slash_html($text) {
 	} else {
 		$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 	}
-	$text = str_replace(chr(12), '', $text); // FF
-	$text = str_replace(chr(3), ' ', $text); // ETX
-	return $text;
+
+	return xmlFilterChars($text);
 }
 
+/**
+ * xmlFilterChars
+ *
+ * @since  3.3.3
+ * @param  str $str string to prepare for xml cdata
+ * @return str      filtered string
+ */
+function xmlFilterChars($str){
+	$chr = getRegexUnicode();
+	// filter only xml allowed characters
+	return preg_replace ('/[^'.$chr['ht'].$chr['lf'].$chr['cr'].$chr['lower'].$chr['upper'].']+/u', ' ', $str);
+}
+
+/**
+ * getRegexUnicode
+ * defines unicode char and char ranges for use in regex filters
+ *
+ * @since  3.3.3
+ * @param  str $id key to return from char range array
+ * @return mixed     array or str if id specified of regex char strings
+ */
+function getRegexUnicode($id = null){
+	$chars = array(
+		'null'       => '\x{0000}',            // 0 null
+		'ht'         => '\x{0009}',            // 9 horizontal tab
+		'lf'         => '\x{000a}',            // 10 line feed
+		'vt'         => '\x{000b}',            // 11 vertical tab
+		'FF'         => '\x{000c}',            // 12 form feed
+		'cr'         => '\x{000d}',            // 13 carriage return
+		'cntrl'      => '\x{0001}-\x{0019}',   // 1-31 control codes
+		'cntrllow'   => '\x{0001}-\x{000c}',   // 1-12 low end control codes
+		'cntrlhigh'  => '\x{000e}-\x{0019}',   // 14-31 high end control codes
+		'bom'        => '\x{FEFF}',            // 65279 BOM byte order mark
+		'lower'      => '\x{0020}-\x{D7FF}',   // 32 - 55295
+		'surrogates' => '\x{D800}-\x{DFFF}',   // 55296 - 57343
+		'upper'      => '\x{E000}-\x{FFFD}',   // 57344 - 65533
+		'nonchars'   => '\x{FFFE}-\x{FFFF}',   // 65534 - 65535
+		'privateb'   => '\x{10000}-\x{10FFFD}' // 65536 - 1114109
+	);
+
+	if(isset($id)) return $chars[$id];
+	return $chars;
+}
 
 /**
  * Safe StripSlashes HTML Decode
@@ -761,7 +868,7 @@ function strip_decode($text) {
  * @return string
  */
 function pathinfo_filename($file) {
-	if (defined('PATHINFO_FILENAME')) return pathinfo($file,PATHINFO_FILENAME);
+	if (getDef('PATHINFO_FILENAME')) return pathinfo($file,PATHINFO_FILENAME);
 	$path_parts = pathinfo($file);
 
 	if(isset($path_parts['extension']) && ($file!='..')){
@@ -784,21 +891,17 @@ function pathinfo_filename($file) {
  * @param bool $parts 
  * @return string
  */
-function suggest_site_path($parts=false) {
+function suggest_site_path($parts=false, $protocolRelative = false) {
 	global $GSADMIN;
-	$protocol = http_protocol();
+	$protocol   = $protocolRelative ? '' : http_protocol().':';
 	$path_parts = pathinfo(htmlentities($_SERVER['PHP_SELF'], ENT_QUOTES));
 	$path_parts = str_replace("/".$GSADMIN, "", $path_parts['dirname']);
-	$port = ($p=$_SERVER['SERVER_PORT'])!='80'&&$p!='443'?':'.$p:'';
+	$port       = ( $p=$_SERVER['SERVER_PORT'] ) != '80' && $p != '443' ? ':'.$p : '';
 	
 	if($path_parts == '/') {
-	
-		$fullpath = $protocol."://". htmlentities($_SERVER['SERVER_NAME'], ENT_QUOTES) . $port . "/";
-	
+		$fullpath = $protocol."//". htmlentities($_SERVER['SERVER_NAME'], ENT_QUOTES) . $port . "/";
 	} else {
-		
-		$fullpath = $protocol."://". htmlentities($_SERVER['SERVER_NAME'], ENT_QUOTES) . $port . $path_parts ."/";
-		
+		$fullpath = $protocol."//". htmlentities($_SERVER['SERVER_NAME'], ENT_QUOTES) . $port . $path_parts ."/";
 	}
 		
 	if ($parts) {
@@ -838,9 +941,9 @@ function myself($echo=true) {
  * @return array
  */
 function get_themes($temp) {
-	$themes_path = GSTHEMESPATH . $temp .'/';
+	$themes_path   = GSTHEMESPATH . $temp .'/';
 	$themes_handle = opendir($themes_path);
-	while ($file = readdir($themes_handle))	{
+	while ($file   = readdir($themes_handle))	{
 		if( is_file($themes_path . $file) && $file != "." && $file != ".." ) {
 			$templates[] = $file;
 		}
@@ -892,7 +995,7 @@ function lowercase($text) {
  * @return string
  */
 function find_accesskey($string) {
-	$found = array();
+	$found   = array();
 	$matched = preg_match('/<em>([a-zA-Z])<\/em>/', $string, $found);
 	if ($matched != 1) {
 		 return null;
@@ -960,7 +1063,7 @@ function check_empty_folder($folder) {
 /**
  * Folder Items
  *
- * Return the amount of items within the given folder
+ * Return the count of items within the given folder
  * 
  * @param string $folder
  * @return string
@@ -1002,8 +1105,8 @@ function formatXmlString($xml) {
 	
 	// now indent the tags
 	$token      = strtok($xml, "\n");
-	$result     = ''; // holds formatted version as it is built
-	$pad        = 0; // initial indent
+	$result     = '';      // holds formatted version as it is built
+	$pad        = 0;       // initial indent
 	$matches    = array(); // returns from preg_matches()
 	
 	// scan each line and adjust indent based on opening/closing tags
@@ -1029,7 +1132,7 @@ function formatXmlString($xml) {
 		$line    = str_pad($token, strlen($token)+$pad, ' ', STR_PAD_LEFT);
 		$result .= $line . "\n"; // add to the cumulative result, with linefeed
 		$token   = strtok("\n"); // get the next token
-		$pad    += $indent; // update the pad size for subsequent lines    
+		$pad    += $indent;      // update the pad size for subsequent lines    
 	endwhile; 
 	
 	return $result;
@@ -1070,7 +1173,7 @@ function file_mime_type($file) {
 		finfo_close($finfo);
 		
 	} elseif(function_exists('mime_content_type')) {
-		# Depreciated: http://php.net/manual/en/function.mime-content-type.php
+		# Deprecated: http://php.net/manual/en/function.mime-content-type.php
 		$mimetype = mime_content_type($file);
 	} else {
 		return false;
@@ -1078,7 +1181,6 @@ function file_mime_type($file) {
 	}
 	return $mimetype;
 }
-
 
 /**
  * Check Is FrontEnd
@@ -1089,12 +1191,7 @@ function file_mime_type($file) {
  * @return bool
  */
 function is_frontend() {
-	GLOBAL $base;
-	if(isset($base)) {
-		return true;
-	} else {
-		return false;
-	}
+	return GSBASE;
 }
 
 /**
@@ -1234,14 +1331,14 @@ function directoryToMultiArray($dir,$recursive = true,$exts = null,$exclude = fa
 				// filetype filter
 				$ext = lowercase(pathinfo($value,PATHINFO_EXTENSION));	
 				if(is_array($exts)){
-				if(!in_array($ext,$exts) and !$exclude) continue;
-				if($exclude and in_array($ext,$exts)) continue;
-			}
+					if(!in_array($ext,$exts) and !$exclude) continue;
+					if($exclude and in_array($ext,$exts)) continue;
+				}
 
-			$result[$value] = array();
-			$result[$value]['type'] = 'file';
-			$result[$value]['path'] = $path;
-			$result[$value]['value'] = $value;
+				$result[$value] = array();
+				$result[$value]['type'] = 'file';
+				$result[$value]['path'] = $path;
+				$result[$value]['value'] = $value;
 			}
 		}
 	}
@@ -1275,6 +1372,16 @@ function isDebug(){
 }
 
 /**
+ * check gs version is Alpha
+ *
+ * @since  3.3.0
+ * @return boolean true if Alpha release
+ */
+function isAlpha(){
+	return strPos(get_site_version(false),"a");
+}
+
+/**
  * check gs version is Beta
  *
  * @since  3.3.0
@@ -1293,6 +1400,55 @@ function requestIsAjax(){
 	return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') || isset($_GET['ajax']);
 }
 
+/**
+ * check if array is multidimensional
+ * @since 3.3.2
+ * @param  mixed $ary
+ * @return bool true if $ary is a multidimensional array
+ */
+function arrayIsMultid($ary){
+	return is_array($ary) && ( count($ary) != count($ary,COUNT_RECURSIVE) );
+}
+
+/**
+ * normalizes toolbar setting, always returns js array string syntax
+ * @since 3.3.2
+ * 
+ * @param mixed $var string or array var to convert to js array syntax
+ */
+function returnJsArray($var){
+	
+	if(!$var) return;
+
+	if(!is_array($var)) {
+		// if looks like an array string try to parse as array
+		if(strrpos($var, '[')){
+			// normalize array strings
+			$var = stripslashes($var);         // remove escaped quotes
+			$var = trim(trim($var),',');       // remove trailing commas
+			$var = str_replace('\'','"',$var); // replace single quotes with double (for json)
+			
+			$ary = json_decode($var);
+			
+			// add primary nest if missing
+			if(!is_array($ary) || !arrayIsMultid($ary) ) $ary = json_decode('['.$var.']');
+			
+			// if proper array use it
+			if(is_array($ary) ) $var = json_encode($ary);
+			else $var = "'".trim($var,"\"'")."'"; 
+		} 
+		else{
+			// else quote wrap string, trim to avoid double quoting
+			$var = "'".trim($var,"\"'")."'";
+		}	
+	} 
+	else {
+		// convert php array to js array
+		$var = json_encode($var);
+	}
+
+	return $var;
+}
 
 
 /**
@@ -1315,4 +1471,107 @@ function notInInstall(){
 	return ( get_filename_id() != 'install' && get_filename_id() != 'setup' && get_filename_id() != 'update' && get_filename_id() != 'style' );
 }
 
-?>
+/**
+ * Returns a path relative to GSROOTPATH or optional root path
+ * @todo  probably not fully windows drive safe
+ * @since 3.4
+ * @param  string $path full file path
+ * @param  string $root optional root path, defaults to GSROOTPATH
+ * @return string       relative file path
+ */
+function getRelPath($path,$root = GSROOTPATH ){
+	$relpath = str_replace($root,'',$path);
+	return $relpath;
+}
+
+/**
+ * returns a global, easier inline usage of readonly globals
+ * @since  3.4.0 
+ * @param  str $var variable name
+ * @return global
+ */
+function getGlobal($var) {
+	global $$var;
+	return $$var;
+}
+
+/** 
+ * returns a page global 
+ * currently an alias for getGlobal
+ * @since 3.4.0
+ */
+function getPageGlobal($var){
+	return getGlobal($var);
+}
+
+/**
+ * echo or return toggle
+ * @since  3.4.0
+ * @param str $str 
+ * @param bool $echo default true, echoes or returns $str
+ */
+function echoReturn($str,$echo = true){
+	if ($echo) echo $str;
+	return $str;	
+}
+
+/**
+ * clamps an integer reference to specified value
+ * @since 3.4
+ * @param int &$var reference to clamp
+ * @param int $min minimum to enforce clamp
+ * @param int $max maximum to enforce clamp
+ * @param type $default default to set if not set
+ */
+function clamp(&$var,$min=null,$max=null,$default=null){
+	if(is_numeric($var)){
+		if(is_numeric($min) && $var < $min) $var = $min;
+		if(is_numeric($max) && $var > $max) $var = $max;
+	}
+	if(isset($default)) setDefault($var,$default);
+}
+
+/**
+ * set reference to default value if $var not set
+ * does no type checking or conversions on default
+ * @since 3.4
+ * @param $value   reference
+ * @param $default default value to set
+ */
+function setDefault(&$var = '',$default){
+	if(!isset($var) || empty($var)) $var = $default;
+}
+
+
+function allowVerCheck(){
+	return !isAuthPage() && !getDef('GSNOVERCHECK');
+}
+
+function getVerCheck(){
+	# check to see if there is a core update needed
+	$data = get_api_details();
+	if ($data)	{
+		return json_decode($data);
+	}else {
+		return null;
+	}
+}
+
+/**
+ * includeTheme
+ *
+ * @param  str $template      template name
+ * @param  str $template_file template filename
+ */
+function includeTheme($template, $template_file = 'template.php'){
+	# include the functions.php page if it exists within the theme
+	if ( file_exists(GSTHEMESPATH .$template."/functions.php") ) {
+		include(GSTHEMESPATH .$template."/functions.php");
+	}
+
+	# include the template and template file set within theme.php and each page
+	if ( (!file_exists(GSTHEMESPATH .$template."/".$template_file)) || ($template_file == '') ) { $template_file = "template.php"; }
+	include(GSTHEMESPATH .$template."/".$template_file);
+}
+
+/* ?> */

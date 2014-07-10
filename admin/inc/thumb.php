@@ -120,6 +120,10 @@ foreach ($dirs as $dir){
 	}
 }
 
+//gd check
+$php_modules = get_loaded_extensions();
+if(!in_arrayi('gd', $php_modules)) die('GD not loaded, cannot generate thumbnail');
+
 // Allocate all necessary memory for the image.
 // Special thanks to Alecos for providing the code.
 ini_set('memory_limit', '100M');
@@ -141,4 +145,4 @@ $img->image_type   = $image_type;
 // generate thumbnail
 $img->GenerateThumbFile($images_folder . $from_name, $thumbs_folder . $to_name);
 
-?>
+/* ?> */

@@ -13,9 +13,9 @@ $load['plugin'] = true;
 
 // Include common.php
 include('inc/common.php');
+login_cookie_check();
 
 // Variable settings
-login_cookie_check();
 $id      =  isset($_GET['id']) ? $_GET['id'] : null;
 $ptype   = isset($_GET['type']) ? $_GET['type'] : null; 
 $path    = GSDATAPAGESPATH;
@@ -63,7 +63,9 @@ if ( isset($_GET['action']) && isset($_GET['id']) && $_GET['action'] == 'clone')
 getPagesXmlValues(true);
 
 $count = 0;
-foreach ($pagesArray as $page) {
+$pagesArray_tmp = array();
+
+foreach ($pagesArray as $key =>$page) {
 	if ($page['parent'] != '') { 
 		$parentTitle = returnPageField($page['parent'], "title");
 		$sort = $parentTitle .' '. $page['title'];		
@@ -72,7 +74,7 @@ foreach ($pagesArray as $page) {
 		$sort = $page['title'];
 	}
 	$page = array_merge($page, array('sort' => $sort));
-	$pagesArray_tmp[$count] = $page;
+	$pagesArray_tmp[$key] = $page;
 	$count++;
 }
 // $pagesArray = $pagesArray_tmp;
@@ -92,15 +94,17 @@ get_template('header', cl($SITENAME).' &raquo; '.i18n_r('PAGE_MANAGEMENT'));
 		<div class="main">
 			<h3 class="floated"><?php i18n('PAGE_MANAGEMENT'); ?></h3>
 			<div class="edit-nav clearfix" >
-				<a href="#" id="filtertable" accesskey="<?php echo find_accesskey(i18n_r('FILTER'));?>" ><?php i18n('FILTER'); ?></a>
-				<a href="#" id="show-characters" accesskey="<?php echo find_accesskey(i18n_r('TOGGLE_STATUS'));?>" ><?php i18n('TOGGLE_STATUS'); ?></a>
+				<a href="javascript:void(0)" id="filtertable" accesskey="<?php echo find_accesskey(i18n_r('FILTER'));?>" ><?php i18n('FILTER'); ?></a>
+				<a href="javascript:void(0)" id="show-characters" accesskey="<?php echo find_accesskey(i18n_r('TOGGLE_STATUS'));?>" ><?php i18n('TOGGLE_STATUS'); ?></a>
 			</div>
 			<div id="filter-search">
 				<form><input type="text" autocomplete="off" class="text" id="q" placeholder="<?php echo strip_tags(lowercase(i18n_r('FILTER'))); ?>..." /> &nbsp; <a href="pages.php" class="cancel"><?php i18n('CANCEL'); ?></a></form>
 			</div>
 			
-			<table id="editpages" class="edittable highlight paginate">
-				<tr><th><?php i18n('PAGE_TITLE'); ?></th><th style="text-align:right;" ><?php i18n('DATE'); ?></th><th></th><th></th></tr>
+			<table id="editpages" class="edittable highlight striped paginate tree">
+				<thead>
+					<tr><th><?php i18n('PAGE_TITLE'); ?></th><th style="text-align:right;" ><?php i18n('DATE'); ?></th><th></th><th></th></tr>
+				</thead>					
 				<?php echo $table; ?>
 			</table>
 			<p><em><b><span id="pg_counter"><?php echo $count; ?></span></b> <?php i18n('TOTAL_PAGES'); ?></em></p>

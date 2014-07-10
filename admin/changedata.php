@@ -17,6 +17,10 @@ include('inc/common.php');
 
 $autoSaveDraft = false; // auto save to autosave drafts
 
+$bakpagespath = GSBACKUPSPATH .getRelPath(GSDATAPAGESPATH,GSDATAPATH); // backups/pages/					
+
+login_cookie_check();
+
 // check form referrer - needs siteurl and edit.php in it. 
 if (isset($_SERVER['HTTP_REFERER'])) {
 	if ( !(strpos(str_replace('http://www.', '', $SITEURL), $_SERVER['HTTP_REFERER']) === false) || !(strpos("edit.php", $_SERVER['HTTP_REFERER']) === false)) {
@@ -26,8 +30,6 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 	}
 }
 
-login_cookie_check();
-	
 if (isset($_POST['submitted'])) {
 	check_for_csrf("edit", "edit.php");	
 	
@@ -77,11 +79,12 @@ if (isset($_POST['submitted'])) {
 				} else {
 					exec_action('changedata-updateslug');
 					updateSlugs($oldslug);
+					// do backup
 					$file = GSDATAPAGESPATH . $url .".xml";
 					$existing = GSDATAPAGESPATH . $oldslug .".xml";
-					$bakfile = GSBACKUPSPATH."pages/". $oldslug .".bak.xml";
-					copy($existing, $bakfile);
-					unlink($existing);
+					$bakfile = $bakpagespath. $oldslug .".bak.xml";
+					copy($existing, $bakfile); // copy to backup folder
+					unlink($existing); // delete page, wil resave new one here
 				} 
 			} 
 		}
@@ -115,7 +118,7 @@ if (isset($_POST['submitted'])) {
 		else $metarNoArchive = 0; 
 
 		// If saving a new file do not overwrite existing, get next incremental filename, file-count.xml
-		if ( file_exists($file) && ($url != $oldslug) ) {
+		if ( (file_exists($file) && $url != $oldslug) ||  in_array($url,$reservedSlugs) ) {
 			$count = "1";
 			$file = GSDATAPAGESPATH . $url ."-".$count.".xml";
 			while ( file_exists($file) ) {
@@ -128,7 +131,7 @@ if (isset($_POST['submitted'])) {
 		// if we are editing an existing page, create a backup
 		if ( file_exists($file) ) 
 		{
-			$bakfile = GSBACKUPSPATH."pages/". $url .".bak.xml";
+			$bakfile = $bakpagespath. $url .".bak.xml";
 			copy($file, $bakfile);
 		}
 		

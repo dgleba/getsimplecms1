@@ -1,16 +1,31 @@
+<?php if(!defined('IN_GS')){ die('you cannot load this page directly.'); } ?>
+
 /** CSS **/
 
 /*
  * CSS wide
- *
  */
 
+/* <style> */
+
+
+body{
+	margin:0 15px;
+}
+
+body .header{
+	margin-left: -15px;
+	padding: 0 15px;
+	margin-right: -15px;
+}
 
 .wrapper{
 	/* main wrapper */
 	width:100%;
-	max-width:1680px;
+	max-width:<?php echo $width; ?>;
 }
+
+<?php echo $widepagecss; ?>
 
 .wrapper .nav{
 	/* top header nav wrapper */
@@ -18,13 +33,12 @@
 }
 
 .wrapper h1 {
-	/* breathing space for tabs */
-	margin-left: 15px;
+	/*margin-left: 15px;*/
 }
 
 .wrapper .nav li:first-child {
 	/* breathing space for tabs */
-	margin-left: 35px;
+	/*margin-left: 15px;*/
 }
 
 .wrapper table {
@@ -33,20 +47,20 @@
 }
 
 .wrapper #pill {
-	right: 15px;
+	/*right: 15px;*/
 }
 
 .wrapper .nav li.rightnav {
-	margin-right: 15px;
-	margin-left: -15px;
+	/*margin-right: 15px;*/
+	/*margin-left: -15px;*/
 }
 
 .updated, .error, .notify {
-	margin: 0 15px 20px 15px;
+	/*margin: 0 15px 20px 15px;*/
 }
 
 .bodycontent {
-	margin:15px;
+	/*margin:0px 15px;*/
 }
 
 #maincontent{
@@ -56,7 +70,7 @@
 }
 
 #maincontent .main {
-	margin-right: 256px;
+	margin-right: 250px;
 	min-width: 260px;
 }
 
@@ -65,8 +79,8 @@
 }
 
 #footer {
-	margin-left:15px;
-	margin-right:15px;
+	/*margin-left:15px;*/
+	/*margin-right:15px;*/
 }
 
 #theme-edit #header .wrapper  {
@@ -104,3 +118,5 @@ form.manyinputs textarea{
 .rightopt {
 	float:left;
 }
+
+/* </style> */
