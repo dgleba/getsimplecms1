@@ -354,3 +354,27 @@
 [03-Jul-2014 15:57:13 America/Detroit] PHP Notice:  Trying to get property of non-object in C:\p2\xampp\htdocs\getsimplecms1\theme\Bootstrap3\footer.inc.php on line 37
 [03-Jul-2014 15:57:13 America/Detroit] PHP Notice:  Trying to get property of non-object in C:\p2\xampp\htdocs\getsimplecms1\theme\Bootstrap3\footer.inc.php on line 128
 [10-Jul-2014 12:49:05 America/Detroit] PHP Fatal error:  Cannot redeclare get_page_content() (previously declared in C:\p2\xampp\htdocs\getsimplecms1\admin\inc\theme_functions.php:26) in C:\p2\xampp\htdocs\getsimplecms1\admin\inc\theme_functions.php on line 783
+[10-Jul-2014 13:14:05 America/Detroit] PHP Fatal error:  Call to undefined function get_i18n_header() in C:\p2\xampp\htdocs\getsimplecms1\theme\B4G\header.inc.php on line 6
+[10-Jul-2014 13:19:01 America/Detroit] PHP Fatal error:  Call to undefined function get_i18n_header() in C:\p2\xampp\htdocs\getsimplecms1\theme\B4G\header.inc.php on line 6
+[10-Jul-2014 13:21:31 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:21:31 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:21:31 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:21:31 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:21:43 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:21:43 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:21:45 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:21:45 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:21:49 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:21:49 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:21:50 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:21:50 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:21:51 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:21:51 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:21:53 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:21:53 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:22:46 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:22:46 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:22:50 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:22:50 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59
+[10-Jul-2014 13:22:53 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 58
+[10-Jul-2014 13:22:53 America/Detroit] PHP Notice:  Undefined variable: pageTitle in C:\p2\xampp\htdocs\getsimplecms1\theme\frixelone\header.php on line 59

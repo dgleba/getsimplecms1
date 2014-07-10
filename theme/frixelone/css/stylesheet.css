@@ -1,0 +1,58 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
+
+* {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+h2 {
+  font-weight: bold;
+}
+
+
+body {
+  background: #ECF0F1;
+}
+
+img {
+  border: none;
+}
+
+.clear {
+  clear: both;
+}
+
+.hdr {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  padding: 30px;
+  color: inherit;
+  border-bottom: 4px solid #EF0001;
+}
+
+.hdrtagline h1 {
+  font-style: italic;
+  text-align: right;
+}
+
+.hdrlogo {
+  color: #780F0F;
+}
+
+.navbar-hdr {
+  background: #780F0F;
+  color: white;
+  border: none;
+  border-radius: 0px;
+}
+
+.navbar-hdr ul li a {
+  font-size: 13.6pt;
+}
+
+.navbar-inverse .navbar-nav li a {
+  color: #FFFFFF;
+}
+
+.dropdown-menu li a {
+  color: #333333 !important;
+}
