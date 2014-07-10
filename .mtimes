@@ -687,7 +687,6 @@
 1404417579|backups/other/website.xml.bak
 1404417433|data/other/logs/errorlog.txt
 1404416862|data/other/logs/failedlogins.log
-1404408902|data/users/dg.gscms.password.txt.txt
 |data/users/dg.txt.txt
 1403966463|plugins/Blocky/_notes/template.php.mno
 1403965609|plugins/Blocky/css/blocky.eot
@@ -721,3 +720,4 @@
 1363218787|theme/ResponsiveInnovation/stylesheets/skeleton.css
 1363215753|theme/ResponsiveInnovation/template.php
 1404417298|theme/responsive-innovation/responsive-innovation.zip
+|data/users/dg.gscms.password.txt.txt
