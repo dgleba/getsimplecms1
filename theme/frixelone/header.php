@@ -59,8 +59,8 @@
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
             	<?php get_navigation(get_page_slug(FALSE)); ?>
-            <!--<li <?php if ($pageTitle=="Main Template") echo 'class="active"'; ?> ><a href="index.php">Main Template</a></li>
-            <li <?php if ($pageTitle=="With Sidebar") echo 'class="active"'; ?> ><a href="blog.php">With Sidebar</a></li>-->
+            <!--<li <?php //if ($pageTitle=="Main Template") echo 'class="active"'; ?> ><a href="index.php">Main Template</a></li>
+            <li <?php //if ($pageTitle=="With Sidebar") echo 'class="active"'; ?> ><a href="blog.php">With Sidebar</a></li>-->
           </ul>
         </div>
       </div>
