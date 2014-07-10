@@ -99,7 +99,6 @@
 1386622435|data/other/404.xml
 1386622405|data/other/authorization.xml
 1386622435|data/other/components.xml
-1386622435|data/pages/index.xml
 1386622816|data/thumbs/media/thumbnail.not-styled-bootstrap-2013-12-02_162316.jpg
 1386622820|data/thumbs/media/thumbsm.not-styled-bootstrap-2013-12-02_162316.jpg
 1386624201|data/thumbs/thumbsm.styled,2013-12-02_162002.jpg
@@ -207,7 +206,6 @@
 1352849350|theme/twitter-bootstrap/template.php
 1352842974|theme/twitter-bootstrap/wide.php
 1386953995|data/thumbs/thumbnail.styled,2013-12-02_162002.jpg
-1386958732|backups/pages/add-a-user.bak.xml
 1386961845|theme/twitter-bootstrap/header.inc.php
 1404408519|backups/users/dg.xml.bak
 1404408519|data/users/dg.xml
@@ -940,13 +938,8 @@
 1405003593|index.php
 1405012888|backups/other/website.xml.bak
 1405012143|backups/pages/pmds-dataserver.bak.xml
-1405012785|data/other/i18n_menu_cache.xml
-1405012973|data/other/logs/errorlog.txt
-1405012889|data/other/pages.xml
 1405012777|data/other/plugins.xml
 1405012889|data/other/website.xml
-1405011872|data/pages/add-a-user.xml
-1405012171|data/pages/pmds-dataserver.xml
 1405012528|plugins/i18n.zip
 1397053956|plugins/i18n_base.php
 1345726380|plugins/i18n_base/.htaccess
@@ -1001,7 +994,6 @@
 1345725360|plugins/i18n_navigation/lang/ru_RU.php
 1397054404|plugins/i18n_navigation/save.php
 1394407868|plugins/i18n_navigation/structure.php
-1405012143|sitemap.xml
 1405012375|theme/B4G/,this/b4g-bootstrap-for-getsimple.zip
 1400613790|theme/B4G/1_Carousel+Page.php
 1400613790|theme/B4G/2_Page+Carousel.php
@@ -1055,7 +1047,6 @@
 1405012838|theme/frixelone/fonts/glyphicons-halflings-regular.ttf
 1405012838|theme/frixelone/fonts/glyphicons-halflings-regular.woff
 1405012838|theme/frixelone/footer.php
-1405012838|theme/frixelone/header.php
 1405012838|theme/frixelone/images/screenshot.png
 1405012838|theme/frixelone/info.html
 1405012838|theme/frixelone/js/bootstrap-datepicker.js
@@ -1063,3 +1054,14 @@
 1405012838|theme/frixelone/js/bootstrap.min.js
 1405012838|theme/frixelone/template-sidebar.php
 1405012838|theme/frixelone/template.php
+1405013847|backups/pages/add-a-user.bak.xml
+|data/other/i18n_menu_cache.xml
+1405013981|data/other/logs/errorlog.txt
+1405013847|data/other/pages.xml
+1405013847|data/pages/add-a-user.xml
+1405013786|data/pages/index.xml
+1405013786|data/pages/pmds-dataserver.xml
+1405013847|sitemap.xml
+1405012838|theme/frixelone/header - Copy-original.php
+1405013600|theme/frixelone/header -David Gleba 2014-07-10_Thu_13.34-PM .php
+1405014224|theme/frixelone/header.php

@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<item><pubDate>Fri, 13 Dec 2013 19:18:52 +0100</pubDate><title>Add a user</title><titlelong>long title</titlelong><summary></summary><url>add-a-user</url><author>dg</author><template>template.php</template><parent></parent><menu>add a user</menu><menuStatus>Y</menuStatus><private></private><meta></meta><metad></metad><metarNoIndex>0</metarNoIndex><metarNoFollow>0</metarNoFollow><metarNoArchive>0</metarNoArchive><content>&amp;lt;hr /&amp;gt;
-&amp;lt;p&amp;gt;login in to the system&amp;lt;/p&amp;gt;
+<item><pubDate>Thu, 10 Jul 2014 13:37:27 -0400</pubDate><title><![CDATA[Sample content]]></title><titlelong><![CDATA[long title]]></titlelong><summary><![CDATA[]]></summary><url><![CDATA[add-a-user]]></url><author><![CDATA[dg]]></author><template><![CDATA[template.php]]></template><parent><![CDATA[]]></parent><menu><![CDATA[SampleContent]]></menu><menuStatus><![CDATA[Y]]></menuStatus><private><![CDATA[]]></private><meta><![CDATA[]]></meta><metad><![CDATA[]]></metad><metarNoIndex><![CDATA[0]]></metarNoIndex><metarNoFollow><![CDATA[0]]></metarNoFollow><metarNoArchive><![CDATA[0]]></metarNoArchive><content><![CDATA[&lt;hr /&gt;
+&lt;p&gt;login in to the system&lt;/p&gt;
 
-&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&amp;lt;p&amp;gt;&amp;lt;img alt=&amp;quot;&amp;quot; src=&amp;quot;data/uploads/media/not-styled-bootstrap-2013-12-02_162316.jpg&amp;quot; style=&amp;quot;width: 651px; height: 209px;&amp;quot; /&amp;gt;&amp;lt;/p&amp;gt;
+&lt;p&gt;&lt;img alt=&quot;&quot; src=&quot;data/uploads/media/not-styled-bootstrap-2013-12-02_162316.jpg&quot; style=&quot;width: 651px; height: 209px;&quot; /&gt;&lt;/p&gt;
 
-&amp;lt;hr /&amp;gt;
-&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;
+&lt;hr /&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&amp;lt;h1&amp;gt;&amp;lt;strong&amp;gt;item 2:&amp;lt;/strong&amp;gt;&amp;lt;/h1&amp;gt;
+&lt;h1&gt;&lt;strong&gt;item 2:&lt;/strong&gt;&lt;/h1&gt;
 
-&amp;lt;p&amp;gt;&amp;lt;img alt=&amp;quot;&amp;quot; src=&amp;quot;data/uploads/styled%2C2013-12-02_162002.jpg&amp;quot; style=&amp;quot;width: 497px; height: 364px;&amp;quot; /&amp;gt;&amp;lt;/p&amp;gt;
+&lt;p&gt;&lt;img alt=&quot;&quot; src=&quot;data/uploads/styled%2C2013-12-02_162002.jpg&quot; style=&quot;width: 497px; height: 364px;&quot; /&gt;&lt;/p&gt;
 
-&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&amp;lt;hr /&amp;gt;
-&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;
+&lt;hr /&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&amp;lt;h1&amp;gt;Videos&amp;lt;/h1&amp;gt;
+&lt;h1&gt;Videos&lt;/h1&gt;
 
-&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&amp;lt;p&amp;gt;&amp;amp;nbsp;&amp;lt;/p&amp;gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
 
-&amp;lt;p&amp;gt;&amp;lt;span style=&amp;quot;font-size:22px;&amp;quot;&amp;gt;&amp;lt;strong&amp;gt;Training (webm)&amp;lt;/strong&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt;
+&lt;p&gt;&lt;span style=&quot;font-size:22px;&quot;&gt;&lt;strong&gt;Training (webm)&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
 
-&amp;lt;p&amp;gt;
-	&amp;lt;video controls=&amp;quot;&amp;quot; id=&amp;quot;video1&amp;quot; width=&amp;quot;100%&amp;quot;&amp;gt;&amp;lt;source src=&amp;quot;data/uploads/video/stackedpedestals.webm&amp;quot; type=&amp;quot;video/webm&amp;quot; /&amp;gt; A video should be shown here in this spot. Unfortunately, it seems that your browser may not support this video format.&amp;lt;/video&amp;gt;
-&amp;lt;/p&amp;gt;
+&lt;p&gt;
+	&lt;video controls=&quot;&quot; id=&quot;video1&quot; width=&quot;100%&quot;&gt;&lt;source src=&quot;data/uploads/video/stackedpedestals.webm&quot; type=&quot;video/webm&quot; /&gt; A video should be shown here in this spot. Unfortunately, it seems that your browser may not support this video format.&lt;/video&gt;
+&lt;/p&gt;
 
-&amp;lt;p&amp;gt;&amp;lt;span style=&amp;quot;font-size:22px;&amp;quot;&amp;gt;&amp;lt;strong&amp;gt;Mp4 and Ogg video&amp;lt;/strong&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt;
+&lt;p&gt;&lt;span style=&quot;font-size:22px;&quot;&gt;&lt;strong&gt;Mp4 and Ogg video&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
 
-&amp;lt;p&amp;gt;
-	&amp;lt;video controls=&amp;quot;&amp;quot; id=&amp;quot;video2&amp;quot; width=&amp;quot;100%&amp;quot;&amp;gt;&amp;lt;source src=&amp;quot;data/uploads/video/mov_bbb.ogg&amp;quot; type=&amp;quot;video/ogg&amp;quot; /&amp;gt; &amp;lt;source src=&amp;quot;data/uploads/video/mov_bbb.mp4&amp;quot; type=&amp;quot;video/mp4&amp;quot; /&amp;gt; A video should be shown here. Unfortunately, it seems that your browser may not support this video format.&amp;lt;/video&amp;gt;
-&amp;lt;/p&amp;gt;
-</content><menuOrder><![CDATA[2]]></menuOrder></item>
+&lt;p&gt;
+	&lt;video controls=&quot;&quot; id=&quot;video2&quot; width=&quot;100%&quot;&gt;&lt;source src=&quot;data/uploads/video/mov_bbb.ogg&quot; type=&quot;video/ogg&quot; /&gt; &lt;source src=&quot;data/uploads/video/mov_bbb.mp4&quot; type=&quot;video/mp4&quot; /&gt; A video should be shown here. Unfortunately, it seems that your browser may not support this video format.&lt;/video&gt;
+&lt;/p&gt;
+]]></content><menuOrder><![CDATA[1]]></menuOrder></item>

@@ -27,16 +27,13 @@
     <?php get_header(); ?>
   </head>
   <body id="<?php get_page_slug(); ?>" >
-<!-- David Gleba kdg54 2014-07-10_Thu_13.43-PM
-       <div class="hdr">
+      <div class="hdr">
         <div class="container">
           <div class="row">
             <div class="col-md-6">
               <a href="<?php get_site_url(); ?>">
--->
                 <!--To have a logo instead of text, upload something to images/logo.png, uncomment this line, and instead comment the line below this one... <img src="<?php get_theme_url(); ?>/images/logo.png" width="300" alt="<?php get_site_name(); ?>" /> -->
-<!--  David Gleba kdg54 2014-07-10_Thu_13.43-PM
-             <h1 class="hdrlogo"><?php get_site_name(); ?></h1>
+                <h1 class="hdrlogo"><?php get_site_name(); ?></h1>
               </a>
             </div>
             <div class="col-md-6">
@@ -45,7 +42,6 @@
           </div>
         </div>
       </div>
--->
       <div class="navbar navbar-inverse navbar-hdr" role="navigation">
         <div class="container">
           <div class="navbar-header">
