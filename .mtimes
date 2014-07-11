@@ -325,7 +325,6 @@
 1405010333|admin/template/js/ckeditor/adapters/jquery.js
 1405010333|admin/template/js/ckeditor/build-config.js
 1405010333|admin/template/js/ckeditor/ckeditor.js
-1405010333|admin/template/js/ckeditor/config.js
 1405010335|admin/template/js/ckeditor/config.original.js
 |admin/template/js/ckeditor/config.orignal.js
 1405010333|admin/template/js/ckeditor/contents.css
@@ -1066,3 +1065,5 @@
 1405016722|theme/frixelone/header.php
 1405015250|backups/i18n_navigation/pmds-dataserver.xml
 1405015261|data/other/i18n_menu_cache.xml
+1405092107|admin/template/js/ckeditor/config - David Gleba Copy.js
+1405092107|admin/template/js/ckeditor/config.js
