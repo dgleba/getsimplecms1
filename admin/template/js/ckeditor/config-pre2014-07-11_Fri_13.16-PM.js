@@ -49,9 +49,9 @@ CKEDITOR.editorConfig = function( config )
 //David Gleba dgleba@gmail.com keg54 2014-07-11_Fri_09.43-AM
    	//config.protectedSource = [/\r|\n/g];
       //enterMode : CKEDITOR.ENTER_BR
-	  //config.protectedSource.push( /<\?[\s\S]*?\?>/g );                                           // PHP code
-	  //config.protectedSource.push( /<%[\s\S]*?%>/g );                                             // ASP code
-	  //config.protectedSource.push( /(<asp:[^\>]+>[\s|\S]*?<\/asp:[^\>]+>)|(<asp:[^\>]+\/>)/gi );  // ASP.Net code
+	  config.protectedSource.push( /<\?[\s\S]*?\?>/g );                                           // PHP code
+	  config.protectedSource.push( /<%[\s\S]*?%>/g );                                             // ASP code
+	  config.protectedSource.push( /(<asp:[^\>]+>[\s|\S]*?<\/asp:[^\>]+>)|(<asp:[^\>]+\/>)/gi );  // ASP.Net code
 
 //David Gleba kdg54 2014-07-11_Fri_10.03-AM
 CKEDITOR.on( 'instanceReady', function( ev )

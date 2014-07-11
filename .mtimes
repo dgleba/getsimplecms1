@@ -1023,7 +1023,6 @@
 1405012838|theme/frixelone/fonts/glyphicons-halflings-regular.svg
 1405012838|theme/frixelone/fonts/glyphicons-halflings-regular.ttf
 1405012838|theme/frixelone/fonts/glyphicons-halflings-regular.woff
-1405012838|theme/frixelone/footer.php
 1405012838|theme/frixelone/images/screenshot.png
 1405012838|theme/frixelone/info.html
 1405012838|theme/frixelone/js/bootstrap-datepicker.js
@@ -1044,14 +1043,12 @@
 1405015250|backups/i18n_navigation/pmds-dataserver.xml
 1405015261|data/other/i18n_menu_cache.xml
 1405092107|admin/template/js/ckeditor/config - David Gleba Copy.js
-1405092107|admin/template/js/ckeditor/config.js
 1|admin/humans.txt
 1405013933|admin/inc/caching_functions.php
 1405013933|admin/inc/common.php
 1405013933|admin/inc/template_functions.php
 1|admin/install.php
 1|admin/setup.php
-1|admin/template/js/ckeditor/config.orignal.js
 1|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.ckeditor.css
 1|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.css
 1|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.js
@@ -1067,3 +1064,8 @@
 1332436178|theme/ElegantResponsive0.1/js/libs/jquery-1.7.1.min.js
 1332436178|theme/ElegantResponsive0.1/js/libs/modernizr-2.5.3-respond-1.1.0.min.js
 1332473096|theme/twitter-bootstrap/js/libs/modernizr-2.5.3-respond-1.1.0.min.js
+1405095707|admin/template/js/ckeditor/config-pre2014-07-11_Fri_13.16-PM.js
+1405093394|admin/template/js/ckeditor/config.js
+|admin/template/js/ckeditor/config.orignal.js
+1405012838|theme/frixelone/footer - Copy.php
+1405098301|theme/frixelone/footer.php
