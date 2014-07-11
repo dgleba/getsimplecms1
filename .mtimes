@@ -154,11 +154,8 @@
 57105104|theme/ElegantResponsive0.1/css/font/Cardoi99-webfont.ttf
 57105104|theme/ElegantResponsive0.1/css/font/Cardoi99-webfont.woff
 57105104|theme/ElegantResponsive0.1/css/font/SIL Open Font License 1.1.txt
-1332452070|theme/ElegantResponsive0.1/css/style.css
 1332448636|theme/ElegantResponsive0.1/images/logo.png
 1332450718|theme/ElegantResponsive0.1/images/screenshot.png
-1332432578|theme/ElegantResponsive0.1/js/libs/jquery-1.7.1.min.js
-1332432578|theme/ElegantResponsive0.1/js/libs/modernizr-2.5.3-respond-1.1.0.min.js
 1332451536|theme/ElegantResponsive0.1/template.php
 1332451988|theme/ElegantResponsive0.1/wide.php
 1386622213|theme/Innovation/assets/images/break.png
@@ -201,7 +198,6 @@
 1351679898|theme/twitter-bootstrap/js/bootstrap.js
 1351679898|theme/twitter-bootstrap/js/bootstrap.min.js
 1352844312|theme/twitter-bootstrap/js/libs/jquery.min.js
-1332469496|theme/twitter-bootstrap/js/libs/modernizr-2.5.3-respond-1.1.0.min.js
 1332469496|theme/twitter-bootstrap/js/script.js
 1352849350|theme/twitter-bootstrap/template.php
 1352842974|theme/twitter-bootstrap/wide.php
@@ -211,7 +207,6 @@
 1404408519|data/users/dg.xml
 1352849350|theme/twitter-bootstrap/template - Copy.php
 1352842974|theme/twitter-bootstrap/template-wide.php
-|data/users/dg.txt.txt
 1403966463|plugins/Blocky/_notes/template.php.mno
 1403965609|plugins/Blocky/css/blocky.eot
 1403965609|plugins/Blocky/css/blocky.svg
@@ -244,7 +239,6 @@
 1363218787|theme/ResponsiveInnovation/stylesheets/skeleton.css
 1363215753|theme/ResponsiveInnovation/template.php
 1404417298|theme/responsive-innovation/responsive-innovation.zip
-|data/users/dg.gscms.password.txt.txt
 1405010333|.gitattributes
 1405010335|.htaccess
 1405010333|CONTRIBUTING.md
@@ -261,15 +255,12 @@
 1405010333|admin/edit.php
 1405010333|admin/filebrowser.php
 1405010333|admin/health-check.php
-|admin/humans.txt
 1405010333|admin/image.php
 1405010333|admin/inc/ZipArchive.php
 1405010333|admin/inc/ajax.php
 1405010333|admin/inc/api.class.php
 1405010333|admin/inc/api.plugin.php
 1405010333|admin/inc/basic.php
-1405010333|admin/inc/caching_functions.php
-1405010333|admin/inc/common.php
 1405010333|admin/inc/configuration.php
 1405010333|admin/inc/cookie_functions.php
 1405010333|admin/inc/image.class.php
@@ -278,7 +269,6 @@
 1405010333|admin/inc/login_functions.php
 1405010333|admin/inc/plugin_functions.php
 1405010333|admin/inc/security_functions.php
-1405010333|admin/inc/template_functions.php
 1405010333|admin/inc/thumb.php
 1405010333|admin/inc/timezone_options.txt
 1405010333|admin/inc/tmp/tmp-403.xml
@@ -326,7 +316,6 @@
 1405010333|admin/template/js/ckeditor/build-config.js
 1405010333|admin/template/js/ckeditor/ckeditor.js
 1405010335|admin/template/js/ckeditor/config.original.js
-|admin/template/js/ckeditor/config.orignal.js
 1405010333|admin/template/js/ckeditor/contents.css
 1405010333|admin/template/js/ckeditor/lang/af.js
 1405010333|admin/template/js/ckeditor/lang/ar.js
@@ -456,8 +445,6 @@
 1405010334|admin/template/js/ckeditor/plugins/about/dialogs/hidpi/logo_ckeditor.png
 1405010334|admin/template/js/ckeditor/plugins/about/dialogs/logo_ckeditor.png
 1405010334|admin/template/js/ckeditor/plugins/clipboard/dialogs/paste.js
-|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.ckeditor.css
-|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.css
 1405010334|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.min.css
 |admin/template/js/ckeditor/plugins/codemirror/icons/AutoComplete.png
 |admin/template/js/ckeditor/plugins/codemirror/icons/AutoFormat.png
@@ -482,7 +469,6 @@
 1405010334|admin/template/js/ckeditor/plugins/codemirror/js/beautify.min.js
 1405010334|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.addons.min.js
 1405010334|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.addons.search.min.js
-|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.js
 1405010334|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.min.js
 1405010334|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.min.js.map
 1405010334|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.mode.bbcode.min.js
@@ -490,8 +476,6 @@
 1405010334|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.mode.htmlmixed.min.js
 1405010334|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.mode.javascript.min.js
 1405010334|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.mode.php.min.js
-|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.modes.min.js
-|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.search-addons.min.js
 |admin/template/js/ckeditor/plugins/codemirror/js/mode/css.js
 |admin/template/js/ckeditor/plugins/codemirror/js/mode/htmlmixed.js
 |admin/template/js/ckeditor/plugins/codemirror/js/mode/javascript.js
@@ -784,7 +768,6 @@
 1405010334|admin/template/js/ckeditor/skins/getsimple/images/hidpi/refresh.png
 1405010334|admin/template/js/ckeditor/skins/getsimple/images/lock-open.png
 1405010334|admin/template/js/ckeditor/skins/getsimple/images/lock.png
-|admin/template/js/ckeditor/skins/getsimple/images/mini.png
 1405010334|admin/template/js/ckeditor/skins/getsimple/images/refresh.png
 1405010334|admin/template/js/ckeditor/skins/getsimple/readme.md
 1405010334|admin/template/js/ckeditor/skins/getsimple/skin.js
@@ -893,7 +876,6 @@
 1405010335|admin/zip.php
 1405010335|backups/.htaccess
 1405010335|backups/other/.gskeep
-|backups/other/.htaccess
 1405010335|backups/pages/.gskeep
 1405010335|backups/zip/.gskeep
 1405010335|data/.htaccess
@@ -913,7 +895,6 @@
 1405010335|plugins/GSJQueryMigrate/assets/js/jquery-migrate-1.2.1.min.js
 1405010335|plugins/GSJQueryMigrate/lang/en_US.php
 1405010335|plugins/InnovationPlugin.php
-|plugins/InnovationPlugin/lang/.htaccess
 1405010335|plugins/InnovationPlugin/lang/en_US.php
 1405010335|readme.txt
 1405010335|robots.txt
@@ -928,9 +909,6 @@
 1405010335|theme/Innovation/style.css
 1405010335|theme/Innovation/template.php
 1405003593|admin/inc/theme_functions.php
-|admin/install.php
-|admin/setup.php
-|admin/update.php
 1405011142|data/other/403.xml
 1405011162|data/other/logs/failedlogins.log
 1405011170|data/other/logs/logins.log
@@ -1067,3 +1045,25 @@
 1405015261|data/other/i18n_menu_cache.xml
 1405092107|admin/template/js/ckeditor/config - David Gleba Copy.js
 1405092107|admin/template/js/ckeditor/config.js
+1|admin/humans.txt
+1405013933|admin/inc/caching_functions.php
+1405013933|admin/inc/common.php
+1405013933|admin/inc/template_functions.php
+1|admin/install.php
+1|admin/setup.php
+1|admin/template/js/ckeditor/config.orignal.js
+1|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.ckeditor.css
+1|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.css
+1|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.js
+1|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.modes.min.js
+1|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.search-addons.min.js
+1|admin/template/js/ckeditor/skins/getsimple/images/mini.png
+1|admin/update.php
+1|backups/other/.htaccess
+1|data/users/dg.gscms.password.txt.txt
+1|data/users/dg.txt.txt
+1|plugins/InnovationPlugin/lang/.htaccess
+1332455670|theme/ElegantResponsive0.1/css/style.css
+1332436178|theme/ElegantResponsive0.1/js/libs/jquery-1.7.1.min.js
+1332436178|theme/ElegantResponsive0.1/js/libs/modernizr-2.5.3-respond-1.1.0.min.js
+1332473096|theme/twitter-bootstrap/js/libs/modernizr-2.5.3-respond-1.1.0.min.js
