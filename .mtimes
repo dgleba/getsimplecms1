@@ -1031,8 +1031,6 @@
 1405092107|admin/template/js/ckeditor/config - David Gleba Copy.js
 1|admin/humans.txt
 1405013933|admin/inc/caching_functions.php
-1405013933|admin/inc/common.php
-1405013933|admin/inc/template_functions.php
 1|admin/install.php
 1|admin/setup.php
 1|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.ckeditor.css
@@ -1069,3 +1067,5 @@
 1352842988|theme/twitter-bootstrap/heading.php
 1352849350|theme/twitter-bootstrap/template.php
 1352842974|theme/twitter-bootstrap/wide.php
+1405116248|admin/inc/common.php
+1405116248|admin/inc/template_functions.php
