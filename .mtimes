@@ -898,7 +898,6 @@
 1405003593|admin/inc/theme_functions.php
 1405011142|data/other/403.xml
 1405011162|data/other/logs/failedlogins.log
-1405011170|data/other/logs/logins.log
 1405003593|index.php
 1405012888|backups/other/website.xml.bak
 1405012143|backups/pages/pmds-dataserver.bak.xml
@@ -1031,15 +1030,12 @@
 1405092107|admin/template/js/ckeditor/config - David Gleba Copy.js
 1|admin/humans.txt
 1405013933|admin/inc/caching_functions.php
-1|admin/install.php
-1|admin/setup.php
 1|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.ckeditor.css
 1|admin/template/js/ckeditor/plugins/codemirror/css/codemirror.css
 1|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.js
 1|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.modes.min.js
 1|admin/template/js/ckeditor/plugins/codemirror/js/codemirror.search-addons.min.js
 1|admin/template/js/ckeditor/skins/getsimple/images/mini.png
-1|admin/update.php
 1|backups/other/.htaccess
 1|data/users/dg.gscms.password.txt.txt
 1|data/users/dg.txt.txt
@@ -1069,3 +1065,7 @@
 1352842974|theme/twitter-bootstrap/wide.php
 1405116248|admin/inc/common.php
 1405116248|admin/inc/template_functions.php
+|admin/install.php
+|admin/setup.php
+|admin/update.php
+1405131543|data/other/logs/logins.log
