@@ -1,12 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<item><pubDate>Thu, 10 Jul 2014 13:06:08 -0400</pubDate><title><![CDATA[PMDS-DataServer]]></title><titlelong><![CDATA[]]></titlelong><summary><![CDATA[]]></summary><url><![CDATA[pmds-dataserver]]></url><author><![CDATA[dg]]></author><template><![CDATA[template.php]]></template><parent><![CDATA[index]]></parent><menu><![CDATA[PMDS-DataServer]]></menu><menuStatus><![CDATA[]]></menuStatus><menuOrder><![CDATA[0]]></menuOrder><private><![CDATA[]]></private><meta><![CDATA[]]></meta><metad><![CDATA[]]></metad><metarNoIndex><![CDATA[0]]></metarNoIndex><metarNoFollow><![CDATA[0]]></metarNoFollow><metarNoArchive><![CDATA[0]]></metarNoArchive><content><![CDATA[&lt;div class=&quot;alert alert-danger&quot; role=&quot;alert&quot;&gt;
-	&lt;p&gt;We are experimenting with this new PMDS-Data Menu. All buttons/links from the original can be found in the Navigation Bar at the top. Please contact &lt;b&gt;Dave Gleba&lt;/b&gt; at either &lt;b&gt;extension 232&lt;/b&gt; or &lt;b&gt;dgleba@stackpole.com&lt;/b&gt; if you have any issues.&lt;/p&gt;
+<item><pubDate>Fri, 11 Jul 2014 22:47:43 -0400</pubDate><title><![CDATA[PMDS-DataServer]]></title><titlelong><![CDATA[]]></titlelong><summary><![CDATA[]]></summary><url><![CDATA[pmds-dataserver]]></url><author><![CDATA[dg]]></author><template><![CDATA[template.php]]></template><parent><![CDATA[]]></parent><menu><![CDATA[PMDS-DataServer]]></menu><menuStatus><![CDATA[Y]]></menuStatus><private><![CDATA[]]></private><meta><![CDATA[]]></meta><metad><![CDATA[]]></metad><metarNoIndex><![CDATA[0]]></metarNoIndex><metarNoFollow><![CDATA[0]]></metarNoFollow><metarNoArchive><![CDATA[0]]></metarNoArchive><content><![CDATA[&lt;div class=&quot;alert alert-danger&quot; role=&quot;alert&quot;&gt;
+	&lt;p&gt;We are experimenting with this new PMDS-Data Menu. All buttons/links from the original can be found in the Navigation Bar at the top. Please contact 
+		&lt;b&gt;Dave Gleba&lt;/b&gt;
+		at either 
+		&lt;b&gt;extension 232&lt;/b&gt;
+		or 
+		&lt;b&gt;dgleba@stackpole.com&lt;/b&gt;
+		if you have any issues.&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;container theme-showcase&quot; style=&quot;padding-bottom:1500px&quot;&gt;
+&lt;div class=&quot;container theme-showcase&quot; style=&quot;padding-bottom:10px&quot;&gt;
 	&lt;h2 class=&quot;page-header&quot; id=&quot;apps&quot;&gt;Applications&lt;/h2&gt;
 	&lt;!-- &lt;a href=&quot;#&quot;&gt;&lt;p&gt;&lt;small&gt;Back to Top&lt;/small&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;&lt;/a&gt; --&gt;
 
-	&lt;div class=&quot;col-sm-4&quot;&gt;&lt;a class=&quot;list-group-item list-group-item-success&quot; href=&quot;/leanmfg/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;SWI Numbers&lt;/b&gt;&lt;/a&gt; &lt;a class=&quot;list-group-item&quot; href=&quot;/prodrpt/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;Production Status App&lt;/b&gt;&lt;/a&gt; &lt;a class=&quot;list-group-item list-group-item-success&quot; href=&quot;/shiftcsd1/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;CSD1 Shift Reports&lt;/b&gt;&lt;/a&gt; &lt;a class=&quot;list-group-item&quot; href=&quot;/shiftcsd1sup/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;CSD1 Supervisor Shift Reports&lt;/b&gt;&lt;/a&gt; &lt;a class=&quot;list-group-item list-group-item-success&quot; href=&quot;/shiftsmsmeer/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;SMS Meer Press Shift Report&lt;/b&gt;&lt;/a&gt; &lt;a class=&quot;list-group-item&quot; href=&quot;/shiftcsd2/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;CSD2 Shift Reports&lt;/b&gt;&lt;/a&gt; &lt;a class=&quot;list-group-item list-group-item-success&quot; href=&quot;/shiftcsd2sup/&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;CSD2 Supervisor Shift Reports&lt;/b&gt;&lt;/a&gt; &lt;a class=&quot;list-group-item &quot; href=&quot;&quot; target=&quot;_blank&quot;&gt;&lt;b&gt; &lt;/b&gt;&lt;/a&gt; &lt;a class=&quot;list-group-item list-group-item-warning&quot; href=&quot;/index1orig.html&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;...The Original Menu...&lt;/b&gt;&lt;/a&gt;&lt;/div&gt;
+	&lt;div class=&quot;col-sm-4&quot;&gt;
+		&lt;a class=&quot;list-group-item list-group-item-success&quot; href=&quot;/leanmfg/&quot; target=&quot;_blank&quot;&gt;
+			&lt;b&gt;SWI Numbers&lt;/b&gt;
+		&lt;/a&gt;
+		
+		&lt;a class=&quot;list-group-item&quot; href=&quot;/prodrpt/&quot; target=&quot;_blank&quot;&gt;
+			&lt;b&gt;Production Status App&lt;/b&gt;
+		&lt;/a&gt;
+		
+		&lt;a class=&quot;list-group-item list-group-item-success&quot; href=&quot;/shiftcsd1/&quot; target=&quot;_blank&quot;&gt;
+			&lt;b&gt;CSD1 Shift Reports&lt;/b&gt;
+		&lt;/a&gt;
+		
+		&lt;a class=&quot;list-group-item&quot; href=&quot;/shiftcsd1sup/&quot; target=&quot;_blank&quot;&gt;
+			&lt;b&gt;CSD1 Supervisor Shift Reports&lt;/b&gt;
+		&lt;/a&gt;
+		
+		&lt;a class=&quot;list-group-item list-group-item-success&quot; href=&quot;/shiftsmsmeer/&quot; target=&quot;_blank&quot;&gt;
+			&lt;b&gt;SMS Meer Press Shift Report&lt;/b&gt;
+		&lt;/a&gt;
+		
+		&lt;a class=&quot;list-group-item&quot; href=&quot;/shiftcsd2/&quot; target=&quot;_blank&quot;&gt;
+			&lt;b&gt;CSD2 Shift Reports&lt;/b&gt;
+		&lt;/a&gt;
+		
+		&lt;a class=&quot;list-group-item list-group-item-success&quot; href=&quot;/shiftcsd2sup/&quot; target=&quot;_blank&quot;&gt;
+			&lt;b&gt;CSD2 Supervisor Shift Reports&lt;/b&gt;
+		&lt;/a&gt;
+		
+		&lt;a class=&quot;list-group-item &quot; href=&quot;&quot; target=&quot;_blank&quot;&gt;
+			&lt;b&gt; &lt;/b&gt;
+		&lt;/a&gt;
+		
+		&lt;a class=&quot;list-group-item list-group-item-warning&quot; href=&quot;/index1orig.html&quot; target=&quot;_blank&quot;&gt;
+			&lt;b&gt;...The Original Menu...&lt;/b&gt;
+		&lt;/a&gt;
+	&lt;/div&gt;
 &lt;/div&gt;
-]]></content></item>
+]]></content><menuOrder><![CDATA[2]]></menuOrder></item>
